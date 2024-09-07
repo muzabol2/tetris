@@ -1,6 +1,5 @@
-import { GithubLink } from "@/components";
 import { config } from "@/config";
-import { TetrisLogoIcon } from "@/icons";
+import { GithubIcon, TetrisLogoIcon } from "@/icons";
 
 const Home = () => {
   return (
@@ -10,7 +9,9 @@ const Home = () => {
           <TetrisLogoIcon />
           {config.title}
         </h1>
-        <GithubLink />
+        <a href={config.githubUrl} target="_blank" rel="noopener noreferrer">
+          <GithubIcon />
+        </a>
       </header>
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start"></main>
     </div>
