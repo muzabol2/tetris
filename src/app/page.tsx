@@ -1,5 +1,5 @@
 import { config } from "@/config";
-import { GithubIcon, TetrisLogoIcon } from "@/icons";
+import { BuyMeACoffee, GithubIcon, TetrisLogoIcon } from "@/icons";
 
 const Home = () => {
   return (
@@ -9,9 +9,19 @@ const Home = () => {
           <TetrisLogoIcon />
           {config.title}
         </h1>
-        <a href={config.githubUrl} target="_blank" rel="noopener noreferrer">
-          <GithubIcon />
-        </a>
+        <div className="flex items-center gap-4">
+          <a
+            href={config.buyMeACoffee}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center p-1 bg-yellow-400 text-black font-semibold rounded-lg shadow hover:bg-yellow-500 transition-colors duration-200"
+          >
+            <BuyMeACoffee />
+          </a>
+          <a href={config.githubUrl} target="_blank" rel="noopener noreferrer">
+            <GithubIcon />
+          </a>
+        </div>
       </header>
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start"></main>
     </div>
