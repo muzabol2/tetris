@@ -1,0 +1,1 @@
+export { TetrisLogoIcon } from "./TetrisLogoIcon";
