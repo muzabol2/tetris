@@ -2,11 +2,10 @@
 
 const Home = () => {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 transition-colors duration-200">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start"></main>
+    <div className="relative w-[320px] h-[640px] border border-gray-500 bg-gray-100 dark:bg-gray-900 shadow-lg grid grid-cols-10 grid-rows-20">
+      {/* Tetris game here */}
     </div>
   );
 };
-
 
 export default Home;

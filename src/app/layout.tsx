@@ -14,10 +14,12 @@ interface Props {
 
 const RootLayout = ({ children }: Readonly<Props>) => (
   <html lang="en" suppressHydrationWarning>
-    <body>
+    <body className="min-h-screen flex flex-col bg-background text-foreground transition-colors duration-200">
       <Providers>
         <Navbar />
-        {children}
+        <main className="flex-1 flex flex-col items-center justify-center mt-[4rem] mb-0">
+          {children}
+        </main>
       </Providers>
     </body>
   </html>
