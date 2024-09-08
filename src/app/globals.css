@@ -6,6 +6,11 @@
   --background: #ffffff;
   --foreground: #24292f;
   --header: #f6f8fa;
+  --border: #d0d7de;
+  --muted-text: #6e7781;
+  --link: #0969da;
+  --button-bg: #2da44e;
+  --button-text: #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -13,6 +18,11 @@
     --background: #0d1117;
     --foreground: #c9d1d9;
     --header: #161b22;
+    --border: #30363d;
+    --muted-text: #8b949e;
+    --link: #58a6ff;
+    --button-bg: #238636;
+    --button-text: #ffffff;
   }
 }
 
@@ -24,4 +34,20 @@ body {
 
 header {
   background-color: var(--header);
+  border-bottom: 1px solid var(--border);
+}
+
+button {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+}
+
+a {
+  color: var(--link);
+}
+
+.muted {
+  color: var(--muted-text);
 }

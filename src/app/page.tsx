@@ -1,15 +1,18 @@
+"use client";
+import { ColorModeSwitcher } from "@/components";
 import { config } from "@/config";
 import { BuyMeACoffee, GithubIcon, TetrisLogoIcon } from "@/icons";
 
 const Home = () => {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <header className="w-full flex items-center justify-between p-4 bg-header bg-opacity-90 fixed top-0 left-0 right-0 shadow-md z-50 pl-8 pr-8">
-        <h1 className="flex items-center gap-2 text-3xl font-bold text-white">
+    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-background text-foreground transition-colors duration-200">
+      <header className="w-full flex items-center justify-between p-4 fixed top-0 left-0 right-0 shadow-md z-50 pl-8 pr-8 bg-header dark:bg-header transition-colors duration-200">
+        <h1 className="flex items-center gap-2 text-3xl font-bold text-foreground">
           <TetrisLogoIcon />
           {config.title}
         </h1>
         <div className="flex items-center gap-4">
+          <ColorModeSwitcher />
           <a
             href={config.buyMeACoffee}
             target="_blank"

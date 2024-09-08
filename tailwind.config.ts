@@ -10,9 +10,16 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
         header: "var(--header)",
+        border: "var(--border)",
+        "muted-text": "var(--muted-text)",
+        link: "var(--link)",
+        "button-bg": "var(--button-bg)",
+        "button-text": "var(--button-text)",
       },
     },
   },
+  darkMode: 'class',
   plugins: [],
 };
+
 export default config;
