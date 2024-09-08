@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "./providers";
+import { Navbar } from "@/components";
 
 export const metadata: Metadata = {
   title: "tetris",
@@ -14,7 +15,10 @@ interface Props {
 const RootLayout = ({ children }: Readonly<Props>) => (
   <html lang="en" suppressHydrationWarning>
     <body>
-      <Providers>{children}</Providers>
+      <Providers>
+        <Navbar />
+        {children}
+      </Providers>
     </body>
   </html>
 );
