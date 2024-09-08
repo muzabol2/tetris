@@ -1,1 +1,1 @@
-export { ColorModeSwitcher } from "./color-mode-switcher";
+export { ThemeSwitcher } from "./ThemeSwitcher";

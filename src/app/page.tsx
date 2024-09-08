@@ -1,5 +1,5 @@
 "use client";
-import { ColorModeSwitcher } from "@/components";
+import { ThemeSwitcher } from "@/components";
 import { config } from "@/config";
 import { BuyMeACoffee, GithubIcon, TetrisLogoIcon } from "@/icons";
 
@@ -12,7 +12,7 @@ const Home = () => {
           {config.title}
         </h1>
         <div className="flex items-center gap-4">
-          <ColorModeSwitcher />
+          <ThemeSwitcher />
           <a
             href={config.buyMeACoffee}
             target="_blank"
