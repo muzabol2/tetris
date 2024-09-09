@@ -1,6 +1,6 @@
-import { IconProps } from "@/types";
+import type { IconProps } from "@/types";
 
-const BuyMeACoffee = ({
+const BuyMeACoffeeIcon = ({
   width = "24px",
   height = "24px",
   color = "currentColor",
@@ -10,4 +10,4 @@ const BuyMeACoffee = ({
   </svg>
 );
 
-export { BuyMeACoffee };
+export { BuyMeACoffeeIcon };

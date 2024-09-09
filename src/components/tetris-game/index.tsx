@@ -16,7 +16,7 @@ const TetrisGame = () => {
               cell ? "bg-gray-700" : "bg-gray-100"
             }`}
           />
-        ))
+        )),
       )}
       {currentPiece && (
         <div
@@ -41,7 +41,7 @@ const TetrisGame = () => {
                   cell ? "bg-gray-700" : "bg-transparent"
                 }`}
               />
-            ))
+            )),
           )}
         </div>
       )}
