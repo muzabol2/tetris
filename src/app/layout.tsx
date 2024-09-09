@@ -17,7 +17,7 @@ const RootLayout = ({ children }: Readonly<Props>) => (
     <body className="min-h-screen flex flex-col bg-background text-foreground transition-colors duration-200">
       <Providers>
         <Navbar />
-        <main className="flex-1 flex flex-col items-center justify-center mt-[4rem] mb-0">
+        <main className="flex-1 flex flex-col items-center justify-center w-full max-w-[1200px] mx-auto px-6 lg:px-12 mt-[4rem] mb-0">
           {children}
         </main>
       </Providers>
