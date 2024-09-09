@@ -8,13 +8,7 @@
     "plugin:import/typescript",
     "plugin:prettier/recommended"
   ],
-  "plugins": [
-    "@typescript-eslint",
-    "prettier",
-    "sort-exports",
-    "import",
-    "react-refresh"
-  ],
+  "plugins": ["@typescript-eslint", "prettier", "sort-exports", "import", "react-refresh"],
   "rules": {
     "indent": ["error", 2, { "SwitchCase": 1 }],
     "linebreak-style": ["error", "unix"],
