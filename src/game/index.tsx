@@ -7,41 +7,41 @@ const TetrisGame = () => {
   const { grid, currentPiece, isGameOver, score } = TetrisGameLogic();
 
   return (
-    <div className="relative w-[320px] h-[640px] border border-gray-500 bg-gray-100 dark:bg-gray-900 shadow-lg grid grid-cols-10 grid-rows-20 gap-1">
+    <div className="relative border border-gray-500 bg-gray-100 dark:bg-gray-900 shadow-lg grid grid-cols-10 grid-rows-20">
+      <div className="absolute top-0 right-0 text-white bg-gray-800 dark:bg-black bg-opacity-75 p-1">
+        Score: {score}
+      </div>
       {grid.map((row, rowIndex) =>
         row.map((cell, colIndex) => (
           <div
             key={`${rowIndex}-${colIndex}`}
-            className={`w-[${BLOCK_SIZE}px] h-[${BLOCK_SIZE}px] ${
-              cell ? "bg-gray-700" : "bg-gray-100"
-            }`}
+            className={`grid ${cell ? "bg-gray-700" : "bg-gray-100"}`}
+            style={{
+              width: `${BLOCK_SIZE}px`,
+              height: `${BLOCK_SIZE}px`,
+            }}
           />
-        )),
+        ))
       )}
       {currentPiece && (
         <div
-          className="absolute"
+          className="absolute grid"
           style={{
             top: `${currentPiece.y * BLOCK_SIZE}px`,
             left: `${currentPiece.x * BLOCK_SIZE}px`,
             width: `${currentPiece.shape[0].length * BLOCK_SIZE}px`,
             height: `${currentPiece.shape.length * BLOCK_SIZE}px`,
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            display: "grid",
             gridTemplateColumns: `repeat(${currentPiece.shape[0].length}, ${BLOCK_SIZE}px)`,
             gridTemplateRows: `repeat(${currentPiece.shape.length}, ${BLOCK_SIZE}px)`,
-            gap: "1px",
           }}
         >
           {currentPiece.shape.map((row, rowIndex) =>
             row.map((cell, colIndex) => (
               <div
                 key={`${rowIndex}-${colIndex}`}
-                className={`w-[${BLOCK_SIZE}px] h-[${BLOCK_SIZE}px] ${
-                  cell ? "bg-gray-700" : "bg-transparent"
-                }`}
+                className={`w-[${BLOCK_SIZE}px] h-[${BLOCK_SIZE}px] ${cell ? "bg-gray-700" : "bg-transparent"}`}
               />
-            )),
+            ))
           )}
         </div>
       )}
@@ -50,9 +50,6 @@ const TetrisGame = () => {
           Game Over
         </div>
       )}
-      <div className="absolute bottom-0 right-0 p-2 text-white bg-gray-800">
-        Score: {score}
-      </div>
     </div>
   );
 };

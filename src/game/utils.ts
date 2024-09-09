@@ -19,10 +19,7 @@ const isCollision = (piece: Piece, grid: number[][]): boolean => {
     for (let x = 0; x < piece.shape[y].length; x++) {
       if (
         piece.shape[y][x] &&
-        (piece.y + y >= ROWS ||
-          piece.x + x < 0 ||
-          piece.x + x >= COLS ||
-          grid[piece.y + y][piece.x + x])
+        (piece.y + y >= ROWS || piece.x + x < 0 || piece.x + x >= COLS || grid[piece.y + y][piece.x + x])
       ) {
         return true;
       }

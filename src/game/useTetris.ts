@@ -6,9 +6,7 @@ import { COLS, ROWS } from "@/constants";
 import { getRandomPiece, isCollision } from "./utils";
 
 const TetrisGameLogic = () => {
-  const [grid, setGrid] = useState<number[][]>(
-    Array.from({ length: ROWS }, () => Array(COLS).fill(0)),
-  );
+  const [grid, setGrid] = useState<number[][]>(Array.from({ length: ROWS }, () => Array(COLS).fill(0)));
   const [currentPiece, setCurrentPiece] = useState<Piece | null>(null);
   const [isGameOver, setIsGameOver] = useState<boolean>(false);
   const [score, setScore] = useState<number>(0);
@@ -74,9 +72,7 @@ const TetrisGameLogic = () => {
     const linesCleared = ROWS - newGrid.length;
 
     if (linesCleared > 0) {
-      newGrid.unshift(
-        ...Array.from({ length: linesCleared }, () => Array(COLS).fill(0)),
-      );
+      newGrid.unshift(...Array.from({ length: linesCleared }, () => Array(COLS).fill(0)));
       setGrid(newGrid);
       setScore((prev) => prev + linesCleared * 100);
     }
@@ -101,7 +97,7 @@ const TetrisGameLogic = () => {
           break;
       }
     },
-    [currentPiece, isGameOver],
+    [currentPiece, isGameOver]
   );
 
   const movePiece = (dx: number, dy: number) => {
@@ -121,9 +117,7 @@ const TetrisGameLogic = () => {
   const rotatePiece = () => {
     if (!currentPiece) return;
 
-    const rotatedShape = currentPiece.shape[0]
-      .map((_, i) => currentPiece.shape.map((row) => row[i]))
-      .reverse();
+    const rotatedShape = currentPiece.shape[0].map((_, i) => currentPiece.shape.map((row) => row[i])).reverse();
     const newPiece = { ...currentPiece, shape: rotatedShape };
 
     if (!isCollision(newPiece, grid)) {

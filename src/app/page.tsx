@@ -1,11 +1,7 @@
 "use client";
 
-import { TetrisGame } from "@/components";
+import { TetrisGame } from "@/game";
 
-const Home = () => (
-  <div className="relative w-[320px] h-[640px] border border-gray-500 bg-gray-100 dark:bg-gray-900 shadow-lg grid grid-cols-10 grid-rows-20">
-    <TetrisGame />
-  </div>
-);
+const Home = () => <TetrisGame />;
 
 export default Home;
