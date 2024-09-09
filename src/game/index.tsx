@@ -15,7 +15,7 @@ const TetrisGame = () => {
         row.map((cell, colIndex) => (
           <div
             key={`${rowIndex}-${colIndex}`}
-            className={`grid ${cell ? "bg-gray-700" : "bg-gray-100"}`}
+            className={`border grid ${cell ? "bg-gray-700" : "bg-gray-100"}`}
             style={{
               width: `${BLOCK_SIZE}px`,
               height: `${BLOCK_SIZE}px`,
@@ -39,7 +39,7 @@ const TetrisGame = () => {
             row.map((cell, colIndex) => (
               <div
                 key={`${rowIndex}-${colIndex}`}
-                className={`w-[${BLOCK_SIZE}px] h-[${BLOCK_SIZE}px] ${cell ? "bg-gray-700" : "bg-transparent"}`}
+                className={`w-[${BLOCK_SIZE}px] h-[${BLOCK_SIZE}px] border ${cell ? "bg-gray-700" : "bg-transparent"}`}
               />
             ))
           )}

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import "./globals.css";
-import { Providers } from "./providers";
+import "@/styles/globals.css";
 import { Navbar } from "@/components";
+import { ThemeProvider } from "next-themes";
 
 export const metadata: Metadata = {
   title: "tetris",
@@ -15,12 +15,12 @@ interface Props {
 const RootLayout = ({ children }: Readonly<Props>) => (
   <html lang="en" suppressHydrationWarning>
     <body className="min-h-screen flex flex-col bg-background text-foreground transition-colors duration-200">
-      <Providers>
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <Navbar />
-        <main className="flex-1 flex flex-col items-center justify-center w-full max-w-[1200px] mx-auto px-6 lg:px-12 mt-[4rem] mb-0">
+        <main className="flex-1 flex flex-col items-center justify-center w-full max-w-7xl mx-auto px-6 lg:px-12 mt-16 mb-0">
           {children}
         </main>
-      </Providers>
+      </ThemeProvider>
     </body>
   </html>
 );
