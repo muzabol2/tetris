@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { MoonIcon, SunIcon } from "@/icons";
 
-export const ThemeSwitcher = () => {
+const ThemeSwitcher = () => {
   const [mounted, setMounted] = useState(false);
   const { setTheme, resolvedTheme } = useTheme();
   const isActive = resolvedTheme === "dark";
@@ -41,3 +41,5 @@ export const ThemeSwitcher = () => {
     </div>
   );
 };
+
+export { ThemeSwitcher };

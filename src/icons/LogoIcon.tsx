@@ -1,6 +1,6 @@
 import { IconProps } from "@/types";
 
-export const TetrisLogoIcon = ({
+const LogoIcon = ({
   width = "24px",
   height = "24px",
   color = "var(--foreground)",
@@ -12,3 +12,5 @@ export const TetrisLogoIcon = ({
     />
   </svg>
 );
+
+export { LogoIcon };

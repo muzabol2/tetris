@@ -1,7 +1,7 @@
 "use client";
 
 import { ThemeSwitcher } from "@/components";
-import { BuyMeACoffee, GithubIcon, TetrisLogoIcon } from "@/icons";
+import { BuyMeACoffee, GithubIcon, LogoIcon } from "@/icons";
 import { config } from "@/config";
 
 const Navbar = () => {
@@ -9,7 +9,7 @@ const Navbar = () => {
     <header className="w-full flex justify-center fixed top-0 left-0 right-0 shadow-md z-50 bg-header dark:bg-header transition-colors duration-200">
       <div className="w-full max-w-[1200px] flex items-center justify-between p-4">
         <h1 className="flex items-center gap-2 text-3xl font-bold text-foreground">
-          <TetrisLogoIcon />
+          <LogoIcon />
           {config.title}
         </h1>
         <div className="flex items-center gap-4">
