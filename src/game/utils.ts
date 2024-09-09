@@ -1,7 +1,7 @@
 "use client";
 
-import type { Piece } from "@/types";
-import { COLS, ROWS, SHAPES } from "@/constants";
+import { COLS, ROWS, SHAPES } from "./constants";
+import type { Piece } from "./types";
 
 const getRandomPiece = (): Piece => {
   const keys = Object.keys(SHAPES);

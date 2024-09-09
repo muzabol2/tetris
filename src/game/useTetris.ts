@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import type { Piece } from "@/types";
-import { COLS, ROWS } from "@/constants";
+
 import { getRandomPiece, isCollision } from "./utils";
+import type { Piece } from "./types";
+import { COLS, ROWS } from "./constants";
 
 const TetrisGameLogic = () => {
   const [grid, setGrid] = useState<number[][]>(Array.from({ length: ROWS }, () => Array(COLS).fill(0)));

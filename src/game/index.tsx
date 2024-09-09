@@ -1,6 +1,6 @@
 "use client";
 
-import { BLOCK_SIZE } from "@/constants";
+import { BLOCK_SIZE } from "./constants";
 import { TetrisGameLogic } from "./useTetris";
 
 const TetrisGame = () => {

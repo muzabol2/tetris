@@ -1,4 +1,8 @@
-import type { PieceShape } from "@/types";
+import type { PieceShape } from "./types";
+
+const BLOCK_SIZE = 30;
+const COLS = 10;
+const ROWS = 20;
 
 const SHAPES: Record<string, PieceShape> = {
   I: [[1, 1, 1, 1]],
@@ -28,4 +32,4 @@ const SHAPES: Record<string, PieceShape> = {
   ],
 };
 
-export { SHAPES };
+export { BLOCK_SIZE, COLS, ROWS, SHAPES };

@@ -1,4 +1,4 @@
-import type { IconProps } from "@/types";
+import type { IconProps } from "./IconProps";
 
 const MoonIcon = ({ width = "24px", height = "24px", color = "black", onClick }: IconProps) => (
   <svg width={width} height={height} viewBox="0 0 512 512" onClick={onClick}>
