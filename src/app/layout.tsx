@@ -14,7 +14,7 @@ interface Props {
 
 const RootLayout = ({ children }: Readonly<Props>) => (
   <html lang="en" suppressHydrationWarning>
-    <body className="bg-background text-foreground flex min-h-screen flex-col transition-colors duration-200">
+    <body className="flex min-h-screen flex-col bg-background text-foreground transition-colors duration-200">
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <Navbar />
         <main className="mx-auto mb-0 mt-16 flex w-full max-w-7xl flex-1 flex-col items-center justify-center px-6 lg:px-12">

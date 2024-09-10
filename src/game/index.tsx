@@ -10,30 +10,30 @@ const TetrisGame = () => {
   } = TetrisGameLogic();
 
   return (
-    <div className="grid gap-4">
+    <div className="grid">
       {/* Control Section */}
-      <div className="flex items-center justify-between bg-gray-800 p-2 text-white">
-        <span>Score: {score}</span>
+      <div className="flex items-center justify-between p-1">
+        <span className="rounded border border-border px-2 py-1 font-semibold text-foreground">Score: {score}</span>
 
         {gameStatus !== GameStatus.NOT_STARTED &&
           gameStatus !== GameStatus.GAME_OVER &&
           (gameStatus === GameStatus.RUNNING ? (
-            <button onClick={pauseGame} className="rounded bg-yellow-500 px-2 py-1 text-white hover:bg-yellow-700">
+            <button onClick={pauseGame} className="rounded bg-yellow-500 px-2 py-1 text-buttonText hover:bg-yellow-700">
               Pause
             </button>
           ) : (
-            <button onClick={resumeGame} className="rounded bg-blue-500 px-2 py-1 text-white hover:bg-blue-700">
+            <button onClick={resumeGame} className="rounded bg-blue-500 px-2 py-1 text-buttonText hover:bg-blue-700">
               Resume
             </button>
           ))}
 
-        <button onClick={newGame} className="rounded bg-green-500 px-2 py-1 text-white hover:bg-green-700">
+        <button onClick={newGame} className="rounded bg-buttonBg px-2 py-1 text-buttonText hover:bg-green-700">
           New Game
         </button>
       </div>
 
       {/* Game Board */}
-      <div className="grid-rows-20 relative grid grid-cols-10 border border-gray-500 bg-gray-100 shadow-lg dark:bg-gray-900">
+      <div className="grid-rows-20 relative grid grid-cols-10 border border-border bg-background shadow-lg dark:bg-gray-900">
         {grid.map((row, rowIndex) =>
           row.map((cell, colIndex) => (
             <div

@@ -9,9 +9,9 @@ const url = {
 };
 
 const Navbar = () => (
-  <header className="bg-header dark:bg-header fixed left-0 right-0 top-0 z-50 flex w-full justify-center shadow-md transition-colors duration-200">
+  <header className="fixed left-0 right-0 top-0 z-50 flex w-full justify-center bg-header shadow-md transition-colors duration-200 dark:bg-header">
     <div className="flex w-full max-w-7xl items-center justify-between p-4">
-      <h1 className="text-foreground flex items-center gap-2 text-3xl font-bold">
+      <h1 className="flex items-center gap-2 text-3xl font-bold text-foreground">
         <LogoIcon />
         tetris
       </h1>
