@@ -1,4 +1,4 @@
-import type { PieceShape } from "./types";
+import type { PieceShape } from "../types";
 
 const BLOCK_SIZE = 30;
 const COLS = 10;

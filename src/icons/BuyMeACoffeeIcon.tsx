@@ -1,4 +1,4 @@
-import type { IconProps } from "./IconProps";
+import type { IconProps } from "@/types";
 
 const BuyMeACoffeeIcon = ({ width = "24px", height = "24px", color = "currentColor" }: IconProps) => (
   <svg width={width} height={height} fill={color} viewBox="0 0 24 24">

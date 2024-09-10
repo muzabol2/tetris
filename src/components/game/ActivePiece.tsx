@@ -1,11 +1,11 @@
-import { BLOCK_SIZE } from "./constants";
-import type { Piece } from "./types";
+import { BLOCK_SIZE } from "@/constants";
+import type { Piece } from "@/types";
 
-interface ActivePieceProps {
+interface Props {
   currentPiece: Piece;
 }
 
-const ActivePiece = ({ currentPiece }: ActivePieceProps) => (
+const ActivePiece = ({ currentPiece }: Props) => (
   <div
     className="absolute grid"
     style={{

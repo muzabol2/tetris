@@ -1,6 +1,5 @@
-import { BLOCK_SIZE } from "./constants";
-import type { Piece } from "./types";
-import { GameStatus } from "./types";
+import { BLOCK_SIZE } from "@/constants";
+import { GameStatus, type Piece } from "@/types";
 import { ActivePiece } from "./ActivePiece";
 
 interface Props {

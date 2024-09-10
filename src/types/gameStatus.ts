@@ -1,11 +1,3 @@
-type PieceShape = number[][];
-
-type Piece = {
-  shape: PieceShape;
-  x: number;
-  y: number;
-};
-
 enum GameStatus {
   NOT_STARTED = "Not Started",
   RUNNING = "Running",
@@ -14,4 +6,3 @@ enum GameStatus {
 }
 
 export { GameStatus };
-export type { Piece, PieceShape };

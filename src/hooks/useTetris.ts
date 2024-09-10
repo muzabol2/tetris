@@ -1,10 +1,10 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
-import { getRandomPiece, isCollision } from "./utils";
-import { GameStatus, type Piece } from "./types";
-import { COLS, ROWS } from "./constants";
+import { getRandomPiece, isCollision } from "@/utils";
+import { GameStatus, type Piece } from "@/types";
+import { COLS, ROWS } from "@/constants";
 
-const TetrisGameLogic = () => {
+const useTetris = () => {
   const [grid, setGrid] = useState<number[][]>(Array.from({ length: ROWS }, () => Array(COLS).fill(0)));
   const [currentPiece, setCurrentPiece] = useState<Piece | null>(null);
   const [score, setScore] = useState<number>(0);
@@ -145,4 +145,4 @@ const TetrisGameLogic = () => {
   };
 };
 
-export { TetrisGameLogic };
+export { useTetris };
