@@ -15,6 +15,7 @@ This project aims to develop a classic Tetris game from scratch using TypeScript
 - [x] Start/restart functionality
 - [x] Pause/resume functionality
 - [x] Buttons to play on a phone
+- [ ] When down button push long block goes down to the end
 - [ ] Line clearing fix state -> zustand?
 - [ ] Resize GameBoard to small phones
 - [ ] Next piece preview (on the right site from board)
