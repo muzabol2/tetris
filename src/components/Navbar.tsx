@@ -9,9 +9,9 @@ const url = {
 };
 
 const Navbar = () => (
-  <header className="w-full flex justify-center fixed top-0 left-0 right-0 shadow-md z-50 bg-header dark:bg-header transition-colors duration-200">
-    <div className="w-full max-w-7xl flex items-center justify-between p-4">
-      <h1 className="flex items-center gap-2 text-3xl font-bold text-foreground">
+  <header className="bg-header dark:bg-header fixed left-0 right-0 top-0 z-50 flex w-full justify-center shadow-md transition-colors duration-200">
+    <div className="flex w-full max-w-7xl items-center justify-between p-4">
+      <h1 className="text-foreground flex items-center gap-2 text-3xl font-bold">
         <LogoIcon />
         tetris
       </h1>
@@ -21,7 +21,7 @@ const Navbar = () => (
           href={url.buyMeACoffee}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center p-1 bg-yellow-400 text-black font-semibold rounded-lg shadow hover:bg-yellow-500 transition-colors duration-200"
+          className="inline-flex items-center rounded-lg bg-yellow-400 p-1 font-semibold text-black shadow transition-colors duration-200 hover:bg-yellow-500"
         >
           <BuyMeACoffeeIcon />
         </a>

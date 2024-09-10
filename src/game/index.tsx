@@ -1,5 +1,5 @@
 "use client";
-import { BLOCK_SIZE, COLS } from "./constants";
+import { BLOCK_SIZE } from "./constants";
 import { GameStatus } from "./types";
 import { TetrisGameLogic } from "./useTetris";
 
@@ -12,33 +12,33 @@ const TetrisGame = () => {
   return (
     <div className="grid gap-4">
       {/* Control Section */}
-      <div className="p-2 bg-gray-800 text-white flex justify-between items-center">
+      <div className="flex items-center justify-between bg-gray-800 p-2 text-white">
         <span>Score: {score}</span>
 
         {gameStatus !== GameStatus.NOT_STARTED &&
           gameStatus !== GameStatus.GAME_OVER &&
           (gameStatus === GameStatus.RUNNING ? (
-            <button onClick={pauseGame} className="bg-yellow-500 hover:bg-yellow-700 text-white py-1 px-2 rounded">
+            <button onClick={pauseGame} className="rounded bg-yellow-500 px-2 py-1 text-white hover:bg-yellow-700">
               Pause
             </button>
           ) : (
-            <button onClick={resumeGame} className="bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded">
+            <button onClick={resumeGame} className="rounded bg-blue-500 px-2 py-1 text-white hover:bg-blue-700">
               Resume
             </button>
           ))}
 
-        <button onClick={newGame} className="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded">
+        <button onClick={newGame} className="rounded bg-green-500 px-2 py-1 text-white hover:bg-green-700">
           New Game
         </button>
       </div>
 
       {/* Game Board */}
-      <div className="relative border border-gray-500 bg-gray-100 dark:bg-gray-900 shadow-lg grid grid-cols-10 grid-rows-20">
+      <div className="grid-rows-20 relative grid grid-cols-10 border border-gray-500 bg-gray-100 shadow-lg dark:bg-gray-900">
         {grid.map((row, rowIndex) =>
           row.map((cell, colIndex) => (
             <div
               key={`${rowIndex}-${colIndex}`}
-              className={`border grid ${cell ? "bg-gray-700" : "bg-gray-100"}`}
+              className={`grid border ${cell ? "bg-gray-700" : "bg-gray-100"}`}
               style={{
                 width: `${BLOCK_SIZE}px`,
                 height: `${BLOCK_SIZE}px`,
@@ -69,7 +69,7 @@ const TetrisGame = () => {
           </div>
         )}
         {gameStatus === GameStatus.GAME_OVER && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-2xl">
+          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-2xl text-white">
             Game Over
           </div>
         )}
