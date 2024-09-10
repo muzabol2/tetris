@@ -4,7 +4,6 @@ This project aims to develop a classic Tetris game from scratch using TypeScript
 
 ## TODO
 
-### Completed
 - [x] Basic game logic
 - [x] Piece movement (left, right, down)
 - [x] Piece rotation
@@ -13,10 +12,8 @@ This project aims to develop a classic Tetris game from scratch using TypeScript
 - [x] Score tracking
 - [x] Game over detection
 - [x] Basic UI with grid and pieces
-
-### To Be Added
-- [ ] Start/restart functionality
-- [ ] Pause/resume functionality
+- [x] Start/restart functionality
+- [x] Pause/resume functionality
 - [ ] Buttons to play on a phone
 - [ ] Next piece preview
 - [ ] Shadow where the piece will fall

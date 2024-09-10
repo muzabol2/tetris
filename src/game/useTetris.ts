@@ -1,43 +1,48 @@
 "use client";
-
 import { useState, useEffect, useCallback } from "react";
-
 import { getRandomPiece, isCollision } from "./utils";
-import type { Piece } from "./types";
+import { GameStatus, type Piece } from "./types";
 import { COLS, ROWS } from "./constants";
 
 const TetrisGameLogic = () => {
   const [grid, setGrid] = useState<number[][]>(Array.from({ length: ROWS }, () => Array(COLS).fill(0)));
   const [currentPiece, setCurrentPiece] = useState<Piece | null>(null);
-  const [isGameOver, setIsGameOver] = useState<boolean>(false);
   const [score, setScore] = useState<number>(0);
+  const [gameStatus, setGameStatus] = useState<GameStatus>(GameStatus.NOT_STARTED);
 
   useEffect(() => {
-    initializeGame();
-  }, []);
-
-  useEffect(() => {
-    if (currentPiece && !isGameOver) {
+    if (gameStatus === GameStatus.RUNNING && currentPiece) {
       const interval = setInterval(() => {
         movePieceDown();
       }, 1000);
 
       return () => clearInterval(interval);
     }
-  }, [currentPiece, isGameOver]);
+  }, [currentPiece, gameStatus]);
 
-  const initializeGame = () => {
+  const newGame = () => {
     setGrid(Array.from({ length: ROWS }, () => Array(COLS).fill(0)));
     setScore(0);
-    spawnPiece();
+    generatePiece();
+    setGameStatus(GameStatus.RUNNING);
   };
 
-  const spawnPiece = () => {
+  const pauseGame = () => {
+    setGameStatus(GameStatus.PAUSED);
+  };
+
+  const resumeGame = () => {
+    if (gameStatus !== GameStatus.GAME_OVER) {
+      setGameStatus(GameStatus.RUNNING);
+    }
+  };
+
+  const generatePiece = () => {
     setCurrentPiece(getRandomPiece());
   };
 
   const movePieceDown = () => {
-    if (!currentPiece) return;
+    if (!currentPiece || gameStatus !== GameStatus.RUNNING) return;
 
     const newPiece = { ...currentPiece, y: currentPiece.y + 1 };
 
@@ -45,9 +50,9 @@ const TetrisGameLogic = () => {
       setCurrentPiece(newPiece);
     } else {
       mergePiece();
-      spawnPiece();
+      generatePiece();
       if (isCollision(currentPiece, grid)) {
-        setIsGameOver(true);
+        setGameStatus(GameStatus.GAME_OVER);
       }
     }
   };
@@ -81,7 +86,7 @@ const TetrisGameLogic = () => {
 
   const handleKeyPress = useCallback(
     (e: KeyboardEvent) => {
-      if (!currentPiece || isGameOver) return;
+      if (!currentPiece || gameStatus !== GameStatus.RUNNING) return;
 
       switch (e.key) {
         case "ArrowLeft":
@@ -98,7 +103,7 @@ const TetrisGameLogic = () => {
           break;
       }
     },
-    [currentPiece, isGameOver]
+    [currentPiece, gameStatus]
   );
 
   const movePiece = (dx: number, dy: number) => {
@@ -134,7 +139,10 @@ const TetrisGameLogic = () => {
     };
   }, [handleKeyPress]);
 
-  return { grid, currentPiece, isGameOver, score };
+  return {
+    consts: { grid, currentPiece, gameStatus, score },
+    funcs: { newGame, pauseGame, resumeGame },
+  };
 };
 
 export { TetrisGameLogic };

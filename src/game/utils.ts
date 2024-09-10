@@ -1,5 +1,4 @@
 "use client";
-
 import { COLS, ROWS, SHAPES } from "./constants";
 import type { Piece } from "./types";
 
