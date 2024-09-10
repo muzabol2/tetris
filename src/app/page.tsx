@@ -1,12 +1,13 @@
 "use client";
 import { GameMenu, GameBoard, MobileControls } from "@/components";
-import { useTetris } from "@/hooks/useTetris";
+import { useIsMobile, useTetris } from "@/hooks";
 
 const Home = () => {
   const {
-    consts: { grid, currentPiece, gameStatus, score, isMobile },
+    consts: { grid, currentPiece, gameStatus, score },
     funcs: { newGame, pauseGame, resumeGame, movePiece, movePieceDown, rotatePiece },
   } = useTetris();
+  const isMobile = useIsMobile();
 
   return (
     <div className="grid">

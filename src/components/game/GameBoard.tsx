@@ -1,3 +1,4 @@
+"use client";
 import { BLOCK_SIZE } from "@/constants";
 import { GameStatus, type Piece } from "@/types";
 import { ActivePiece } from "./ActivePiece";

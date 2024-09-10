@@ -1,5 +1,4 @@
 "use client";
-
 import { BuyMeACoffeeIcon, GithubIcon, LogoIcon } from "@/icons";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import { urls } from "@/constants";

@@ -1,3 +1,4 @@
+"use client";
 import { BLOCK_SIZE } from "@/constants";
 import type { Piece } from "@/types";
 

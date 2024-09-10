@@ -1,3 +1,4 @@
+"use client";
 interface Props {
   movePiece: (x: number, y: number) => void;
   movePieceDown: () => void;
