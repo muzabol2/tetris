@@ -14,7 +14,7 @@ This project aims to develop a classic Tetris game from scratch using TypeScript
 - [x] Basic UI with grid and pieces
 - [x] Start/restart functionality
 - [x] Pause/resume functionality
-- [ ] Buttons to play on a phone
+- [x] Buttons to play on a phone
 - [ ] Next piece preview
 - [ ] Hold piece functionality -> zustand?
 - [ ] Level progression and increasing speed

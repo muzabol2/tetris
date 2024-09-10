@@ -8,7 +8,7 @@ interface Props {
   resumeGame: () => void;
 }
 
-const ControlSection = ({ score, gameStatus, newGame, pauseGame, resumeGame }: Props) => (
+const GameMenu = ({ score, gameStatus, newGame, pauseGame, resumeGame }: Props) => (
   <div className="flex items-center justify-between p-1">
     <span className="rounded border border-border px-2 py-1 font-semibold text-foreground">Score: {score}</span>
 
@@ -30,4 +30,4 @@ const ControlSection = ({ score, gameStatus, newGame, pauseGame, resumeGame }: P
   </div>
 );
 
-export { ControlSection };
+export { GameMenu };

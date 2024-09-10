@@ -9,6 +9,7 @@ const useTetris = () => {
   const [currentPiece, setCurrentPiece] = useState<Piece | null>(null);
   const [score, setScore] = useState<number>(0);
   const [gameStatus, setGameStatus] = useState<GameStatus>(GameStatus.NOT_STARTED);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     if (gameStatus === GameStatus.RUNNING && currentPiece) {
@@ -139,9 +140,20 @@ const useTetris = () => {
     };
   }, [handleKeyPress]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768); // Mobile breakpoint
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return {
-    consts: { grid, currentPiece, gameStatus, score },
-    funcs: { newGame, pauseGame, resumeGame },
+    consts: { grid, currentPiece, gameStatus, score, isMobile },
+    funcs: { newGame, pauseGame, resumeGame, movePiece, movePieceDown, rotatePiece },
   };
 };
 

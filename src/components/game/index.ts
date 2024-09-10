@@ -1,2 +1,3 @@
-export { ControlSection } from "./ControlSection";
 export { GameBoard } from "./GameBoard";
+export { GameMenu } from "./GameMenu";
+export { MobileControls } from "./MobileControls";
