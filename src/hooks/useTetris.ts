@@ -88,11 +88,11 @@ const useTetris = () => {
       }
     }
     setGrid(newGrid);
-    checkForFullLines();
+    checkForFullLines(newGrid);
   };
 
-  const checkForFullLines = () => {
-    const newGrid = grid.filter((row) => row.some((cell) => cell === 0));
+  const checkForFullLines = (currentGrid: number[][]) => {
+    const newGrid = currentGrid.filter((row) => row.some((cell) => cell === 0));
     const linesCleared = ROWS - newGrid.length;
 
     if (linesCleared > 0) {
