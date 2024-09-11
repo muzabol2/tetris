@@ -1,10 +1,10 @@
 "use client";
-interface Props {
+type Props = {
   movePiece: (x: number, y: number) => void;
   movePieceDown: () => void;
   hardDrop: () => void;
   rotatePiece: () => void;
-}
+};
 
 const MobileControls = ({ movePiece, movePieceDown, hardDrop, rotatePiece }: Props) => (
   <div className="flex items-center justify-between p-1">

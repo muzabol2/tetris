@@ -18,6 +18,7 @@ const useTetris = () => {
 
       return () => clearInterval(interval);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPiece, gameStatus]);
 
   const newGame = () => {
@@ -124,6 +125,7 @@ const useTetris = () => {
           break;
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentPiece, gameStatus]
   );
 
