@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect } from "react";
 import { BLOCK_SIZE, COLS, ROWS } from "@/constants";
 
