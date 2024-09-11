@@ -25,6 +25,7 @@ const useTetris = () => {
     setScore(0);
     generatePiece();
     setGameStatus(GameStatus.RUNNING);
+    (document.activeElement as HTMLElement)?.blur();
   };
 
   const pauseGame = () => {
