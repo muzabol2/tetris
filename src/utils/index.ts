@@ -13,7 +13,9 @@ const getRandomPiece = (): Piece => {
   };
 };
 
-const isCollision = (piece: Piece, grid: number[][]): boolean => {
+const isCollision = (piece: Piece | null, grid: number[][]): boolean => {
+  if (!piece) return true;
+
   for (let y = 0; y < piece.shape.length; y++) {
     for (let x = 0; x < piece.shape[y].length; x++) {
       if (

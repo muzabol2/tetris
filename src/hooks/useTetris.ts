@@ -46,26 +46,43 @@ const useTetris = () => {
 
     const newPiece = { ...currentPiece, y: currentPiece.y + 1 };
 
+    handlePieceMovement(newPiece);
+  };
+
+  const hardDrop = () => {
+    if (!currentPiece || gameStatus !== GameStatus.RUNNING) return;
+
+    const newPiece = { ...currentPiece };
+
+    while (!isCollision({ ...newPiece, y: newPiece.y + 1 }, grid)) {
+      newPiece.y += 1;
+    }
+
+    handlePieceMovement(newPiece);
+  };
+
+  const handlePieceMovement = (newPiece: Piece) => {
     if (!isCollision(newPiece, grid)) {
       setCurrentPiece(newPiece);
     } else {
-      mergePiece();
+      mergePiece(currentPiece);
       generatePiece();
+
       if (isCollision(currentPiece, grid)) {
         setGameStatus(GameStatus.GAME_OVER);
       }
     }
   };
 
-  const mergePiece = () => {
-    if (!currentPiece) return;
+  const mergePiece = (pieceToMerge: Piece | null) => {
+    if (!pieceToMerge) return;
 
     const newGrid = grid.map((row) => row.slice());
 
-    for (let y = 0; y < currentPiece.shape.length; y++) {
-      for (let x = 0; x < currentPiece.shape[y].length; x++) {
-        if (currentPiece.shape[y][x]) {
-          newGrid[currentPiece.y + y][currentPiece.x + x] = 1;
+    for (let y = 0; y < pieceToMerge.shape.length; y++) {
+      for (let x = 0; x < pieceToMerge.shape[y].length; x++) {
+        if (pieceToMerge.shape[y][x]) {
+          newGrid[pieceToMerge.y + y][pieceToMerge.x + x] = 1;
         }
       }
     }
@@ -100,6 +117,9 @@ const useTetris = () => {
           break;
         case "ArrowUp":
           rotatePiece();
+          break;
+        case " ": // Space
+          hardDrop();
           break;
       }
     },
@@ -141,7 +161,7 @@ const useTetris = () => {
 
   return {
     consts: { grid, currentPiece, gameStatus, score },
-    funcs: { newGame, pauseGame, resumeGame, movePiece, movePieceDown, rotatePiece },
+    funcs: { newGame, pauseGame, resumeGame, movePiece, movePieceDown, hardDrop, rotatePiece },
   };
 };
 

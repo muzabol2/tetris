@@ -5,7 +5,7 @@ import { useIsMobile, useTetris } from "@/hooks";
 const Home = () => {
   const {
     consts: { grid, currentPiece, gameStatus, score },
-    funcs: { newGame, pauseGame, resumeGame, movePiece, movePieceDown, rotatePiece },
+    funcs: { newGame, pauseGame, resumeGame, movePiece, movePieceDown, hardDrop, rotatePiece },
   } = useTetris();
   const isMobile = useIsMobile();
 
@@ -15,7 +15,14 @@ const Home = () => {
 
       <GameBoard grid={grid} currentPiece={currentPiece} gameStatus={gameStatus} />
 
-      {isMobile && <MobileControls movePiece={movePiece} movePieceDown={movePieceDown} rotatePiece={rotatePiece} />}
+      {isMobile && (
+        <MobileControls
+          movePiece={movePiece}
+          movePieceDown={movePieceDown}
+          hardDrop={hardDrop}
+          rotatePiece={rotatePiece}
+        />
+      )}
     </div>
   );
 };
