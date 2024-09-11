@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 :root {
+  --vh: 100vh;
   --background: #ffffff;
   --foreground: #24292f;
   --header: #f6f8fa;
@@ -25,13 +26,18 @@
 }
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
   font-family: sans-serif;
-  height: 100svh;
   margin: 0;
   padding: 0;
   overflow: hidden;
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --vh: 100svh;
+  }
 }
 
 header {
