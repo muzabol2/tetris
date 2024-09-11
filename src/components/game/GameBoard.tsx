@@ -3,11 +3,11 @@ import { BLOCK_SIZE } from "@/constants";
 import { GameStatus, type Piece } from "@/types";
 import { ActivePiece } from "./ActivePiece";
 
-interface Props {
+type Props = {
   grid: number[][];
   currentPiece: Piece | null;
   gameStatus: GameStatus;
-}
+};
 
 const GameBoard = ({ grid, currentPiece, gameStatus }: Props) => (
   <div className="grid-rows-20 relative grid grid-cols-10 border border-border bg-background shadow-lg dark:bg-gray-900">

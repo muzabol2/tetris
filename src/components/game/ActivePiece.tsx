@@ -2,9 +2,9 @@
 import { BLOCK_SIZE } from "@/constants";
 import type { Piece } from "@/types";
 
-interface Props {
+type Props = {
   currentPiece: Piece;
-}
+};
 
 const ActivePiece = ({ currentPiece }: Props) => (
   <div

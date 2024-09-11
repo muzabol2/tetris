@@ -8,9 +8,9 @@ export const metadata: Metadata = {
   description: "Tetris game app",
 };
 
-interface Props {
+type Props = {
   children: React.ReactNode;
-}
+};
 
 const RootLayout = ({ children }: Readonly<Props>) => (
   <html lang="en" suppressHydrationWarning>

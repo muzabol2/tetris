@@ -1,12 +1,12 @@
 import { GameStatus } from "@/types";
 
-interface Props {
+type Props = {
   score: number;
   gameStatus: GameStatus;
   newGame: () => void;
   pauseGame: () => void;
   resumeGame: () => void;
-}
+};
 
 const GameMenu = ({ score, gameStatus, newGame, pauseGame, resumeGame }: Props) => (
   <div className="flex items-center justify-between p-1">
