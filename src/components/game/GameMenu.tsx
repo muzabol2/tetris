@@ -1,9 +1,10 @@
-import type { Piece } from "@/types";
-import { GameStatus } from "@/types";
+"use client";
+import { GameStatus, type Piece } from "@/types";
 import { NextPiece } from "./NextPiece";
 
 type Props = {
   score: number;
+  highScore: number;
   gameStatus: GameStatus;
   nextPiece: Piece | null;
   newGame: () => void;
@@ -11,7 +12,7 @@ type Props = {
   resumeGame: () => void;
 };
 
-const GameMenu = ({ score, gameStatus, nextPiece, newGame, pauseGame, resumeGame }: Props) => (
+const GameMenu = ({ score, highScore, gameStatus, nextPiece, newGame, pauseGame, resumeGame }: Props) => (
   <div className="flex flex-col items-center gap-2">
     <button onClick={newGame} className="w-24 rounded bg-buttonBg p-1 text-buttonText">
       New Game
@@ -29,12 +30,17 @@ const GameMenu = ({ score, gameStatus, nextPiece, newGame, pauseGame, resumeGame
         </button>
       ))}
 
-    <span className="flex w-24 flex-col items-center justify-center rounded border border-border p-1 font-semibold text-foreground">
+    <span className="flex w-24 flex-col items-center justify-center rounded border border-border p-1 text-foreground">
       <span>Score:</span>
       <span>{score}</span>
     </span>
 
     <NextPiece nextPiece={nextPiece} />
+
+    <span className="flex w-24 flex-col items-center justify-center rounded border border-border p-1 text-foreground">
+      <span>High Score:</span>
+      <span>{highScore}</span>
+    </span>
   </div>
 );
 
