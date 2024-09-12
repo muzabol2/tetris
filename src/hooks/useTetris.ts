@@ -9,6 +9,7 @@ const useTetris = () => {
   const [currentPiece, setCurrentPiece] = useState<Piece | null>(null);
   const [score, setScore] = useState<number>(0);
   const [gameStatus, setGameStatus] = useState<GameStatus>(GameStatus.NOT_STARTED);
+  const [nextPiece, setNextPiece] = useState<Piece | null>(null);
 
   useEffect(() => {
     if (gameStatus === GameStatus.RUNNING && currentPiece) {
@@ -24,23 +25,27 @@ const useTetris = () => {
   const newGame = () => {
     setGrid(Array.from({ length: ROWS }, () => Array(COLS).fill(0)));
     setScore(0);
-    generatePiece();
+    setCurrentPiece(getRandomPiece());
+    setNextPiece(getRandomPiece());
     setGameStatus(GameStatus.RUNNING);
     (document.activeElement as HTMLElement)?.blur();
   };
 
   const pauseGame = () => {
     setGameStatus(GameStatus.PAUSED);
+    (document.activeElement as HTMLElement)?.blur();
   };
 
   const resumeGame = () => {
     if (gameStatus !== GameStatus.GAME_OVER) {
       setGameStatus(GameStatus.RUNNING);
     }
+    (document.activeElement as HTMLElement)?.blur();
   };
 
   const generatePiece = () => {
-    setCurrentPiece(getRandomPiece());
+    setCurrentPiece(nextPiece);
+    setNextPiece(getRandomPiece());
   };
 
   const movePieceDown = () => {
@@ -163,7 +168,7 @@ const useTetris = () => {
   }, [handleKeyPress]);
 
   return {
-    consts: { grid, currentPiece, gameStatus, score },
+    consts: { grid, currentPiece, nextPiece, gameStatus, score },
     funcs: { newGame, pauseGame, resumeGame, movePiece, movePieceDown, hardDrop, rotatePiece },
   };
 };

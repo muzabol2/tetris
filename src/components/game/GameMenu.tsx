@@ -1,32 +1,40 @@
+import type { Piece } from "@/types";
 import { GameStatus } from "@/types";
+import { NextPiece } from "./NextPiece";
 
 type Props = {
   score: number;
   gameStatus: GameStatus;
+  nextPiece: Piece | null;
   newGame: () => void;
   pauseGame: () => void;
   resumeGame: () => void;
 };
 
-const GameMenu = ({ score, gameStatus, newGame, pauseGame, resumeGame }: Props) => (
-  <div className="flex items-center justify-between p-1">
-    <span className="rounded border border-border px-2 py-1 font-semibold text-foreground">Score: {score}</span>
+const GameMenu = ({ score, gameStatus, nextPiece, newGame, pauseGame, resumeGame }: Props) => (
+  <div className="flex flex-col items-center gap-2">
+    <button onClick={newGame} className="w-24 rounded bg-buttonBg p-1 text-buttonText">
+      New Game
+    </button>
 
     {gameStatus !== GameStatus.NOT_STARTED &&
       gameStatus !== GameStatus.GAME_OVER &&
       (gameStatus === GameStatus.RUNNING ? (
-        <button onClick={pauseGame} className="rounded bg-yellow-500 px-2 py-1 text-buttonText">
+        <button onClick={pauseGame} className="w-24 rounded bg-yellow-500 px-2 py-1 text-buttonText">
           Pause
         </button>
       ) : (
-        <button onClick={resumeGame} className="rounded bg-blue-500 px-2 py-1 text-buttonText">
+        <button onClick={resumeGame} className="w-24 rounded bg-blue-500 px-2 py-1 text-buttonText">
           Resume
         </button>
       ))}
 
-    <button onClick={newGame} className="rounded bg-buttonBg px-2 py-1 text-buttonText">
-      New Game
-    </button>
+    <span className="flex w-24 flex-col items-center justify-center rounded border border-border p-1 font-semibold text-foreground">
+      <span>Score:</span>
+      <span>{score}</span>
+    </span>
+
+    <NextPiece nextPiece={nextPiece} />
   </div>
 );
 

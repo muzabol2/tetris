@@ -17,8 +17,8 @@ This project aims to develop a classic Tetris game from scratch using TypeScript
 - [x] Buttons to play on a phone
 - [x] When down button push long block goes down to the end
 - [x] Line clearing fix state
-- [ ] Resize GameBoard to small phones
-- [ ] Next piece preview (on the right site from board)
+- [x] Resize GameBoard to small phones
+- [x] Next piece preview (on the right site from board)
 - [ ] Level progression and increasing speed
 - [ ] Keep YourHighScoreBoard tracking -> localStore
 - [ ] Keep state of the game when refresh window -> localStore
