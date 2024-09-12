@@ -11,11 +11,11 @@ const MobileControls = ({ movePiece, movePieceDown, hardDrop, rotatePiece }: Pro
     <button onClick={() => movePiece(-1, 0)} className="rounded bg-blue-500">
       ⬅️
     </button>
-    <button onClick={rotatePiece} className="rounded bg-blue-500">
-      🔄
-    </button>
     <button onClick={movePieceDown} className="rounded bg-blue-500">
       ⬇️
+    </button>
+    <button onClick={rotatePiece} className="rounded bg-blue-500">
+      🔄
     </button>
     <button onClick={hardDrop} className="rounded bg-blue-500">
       ⏬
