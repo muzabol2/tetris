@@ -2,9 +2,11 @@
 import { useState, useEffect, useCallback } from "react";
 import { getRandomPiece, isCollision } from "@/utils";
 import { GameStatus, type Piece } from "@/types";
-import { COLS, ROWS } from "@/constants";
+import { COLS, ROWS, SCORE_INCREMENT } from "@/constants";
+import { useHighScore } from "./useHighScore";
 
 const useTetris = () => {
+  const { highScore, saveHighScore } = useHighScore();
   const [grid, setGrid] = useState<number[][]>(Array.from({ length: ROWS }, () => Array(COLS).fill(0)));
   const [currentPiece, setCurrentPiece] = useState<Piece | null>(null);
   const [score, setScore] = useState<number>(0);
@@ -77,6 +79,7 @@ const useTetris = () => {
 
       if (isCollision(currentPiece, grid)) {
         setGameStatus(GameStatus.GAME_OVER);
+        saveHighScore(score);
       }
     }
   };
@@ -104,7 +107,7 @@ const useTetris = () => {
     if (linesCleared > 0) {
       newGrid.unshift(...Array.from({ length: linesCleared }, () => Array(COLS).fill(0)));
       setGrid(newGrid);
-      setScore((prev) => prev + linesCleared * 100);
+      setScore((prev) => prev + linesCleared * SCORE_INCREMENT);
     }
   };
 
@@ -168,7 +171,7 @@ const useTetris = () => {
   }, [handleKeyPress]);
 
   return {
-    consts: { grid, currentPiece, nextPiece, gameStatus, score },
+    consts: { grid, currentPiece, nextPiece, gameStatus, score, highScore },
     funcs: { newGame, pauseGame, resumeGame, movePiece, movePieceDown, hardDrop, rotatePiece },
   };
 };
