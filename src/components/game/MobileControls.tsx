@@ -7,12 +7,12 @@ type Props = {
 };
 
 const MobileControls = ({ movePiece, movePieceDown, hardDrop, rotatePiece }: Props) => (
-  <div className="flex items-center justify-between p-1">
+  <div className="flex items-center justify-between py-1">
     <button onClick={() => movePiece(-1, 0)} className="rounded bg-blue-500">
       ⬅️
     </button>
     <button onClick={rotatePiece} className="rounded bg-blue-500">
-      ⬆️
+      🔄
     </button>
     <button onClick={movePieceDown} className="rounded bg-blue-500">
       ⬇️

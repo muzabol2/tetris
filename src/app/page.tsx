@@ -10,21 +10,9 @@ const Home = () => {
   const isMobile = useIsMobile();
 
   return (
-    <div className="flex">
-      <div className="flex flex-col">
+    <div className="flex flex-col">
+      <div className="flex gap-1">
         <GameBoard grid={grid} currentPiece={currentPiece} gameStatus={gameStatus} />
-
-        {isMobile && (
-          <MobileControls
-            movePiece={movePiece}
-            movePieceDown={movePieceDown}
-            hardDrop={hardDrop}
-            rotatePiece={rotatePiece}
-          />
-        )}
-      </div>
-
-      <div className="flex flex-col">
         <GameMenu
           score={score}
           gameStatus={gameStatus}
@@ -34,6 +22,15 @@ const Home = () => {
           resumeGame={resumeGame}
         />
       </div>
+
+      {isMobile && (
+        <MobileControls
+          movePiece={movePiece}
+          movePieceDown={movePieceDown}
+          hardDrop={hardDrop}
+          rotatePiece={rotatePiece}
+        />
+      )}
     </div>
   );
 };

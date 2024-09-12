@@ -12,7 +12,7 @@ type Props = {
 };
 
 const GameMenu = ({ score, gameStatus, nextPiece, newGame, pauseGame, resumeGame }: Props) => (
-  <div className="flex flex-col items-center justify-between gap-2">
+  <div className="flex flex-col items-center gap-2">
     <button onClick={newGame} className="w-24 rounded bg-buttonBg p-1 text-buttonText">
       New Game
     </button>

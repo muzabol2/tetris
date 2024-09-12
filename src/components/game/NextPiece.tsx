@@ -23,7 +23,7 @@ const NextPiece = ({ nextPiece }: Props) => {
           row.map((cell, colIndex) => (
             <div
               key={`${rowIndex}-${colIndex}`}
-              className={`w-[${BLOCK_SIZE}px] h-[${BLOCK_SIZE}px] ${cell ? "border bg-gray-700" : "bg-transparent"}`}
+              className={`w-[${BLOCK_SIZE - 2}px] h-[${BLOCK_SIZE - 2}px] ${cell ? "border bg-gray-700" : "bg-transparent"}`}
             />
           ))
         )}
