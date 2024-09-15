@@ -1,9 +1,13 @@
-type PieceShape = number[][];
+type GridCell = {
+  filled: boolean;
+  color: string;
+};
 
 type Piece = {
-  shape: PieceShape;
+  shape: number[][];
+  color: string;
   x: number;
   y: number;
 };
 
-export type { Piece, PieceShape };
+export type { GridCell, Piece };
