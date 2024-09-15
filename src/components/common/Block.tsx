@@ -8,7 +8,7 @@ type Props = {
 
 const Block = ({ color, size, filled }: Props) => (
   <div
-    className="border"
+    className="border border-border"
     style={{
       backgroundColor: filled ? color : "transparent",
       width: `${size}px`,

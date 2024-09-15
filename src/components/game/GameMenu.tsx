@@ -1,6 +1,6 @@
 "use client";
 import { GameStatus, type Piece } from "@/types";
-import { NextPiece } from "./NextPiece";
+import { PieceGrid, Section } from "../common";
 
 type Props = {
   score: number;
@@ -30,17 +30,19 @@ const GameMenu = ({ score, highScore, gameStatus, nextPiece, newGame, pauseGame,
         </button>
       ))}
 
-    <span className="flex w-24 flex-col items-center justify-center rounded border border-border p-1 text-foreground">
-      <span>Score:</span>
+    <Section title="Score:">
       <span>{score}</span>
-    </span>
+    </Section>
 
-    <NextPiece nextPiece={nextPiece} />
+    {nextPiece && (
+      <Section title="Next:">
+        <PieceGrid piece={nextPiece} blockSize={20} />
+      </Section>
+    )}
 
-    <span className="flex w-24 flex-col items-center justify-center rounded border border-border p-1 text-foreground">
-      <span>High Score:</span>
+    <Section title="High Score:">
       <span>{highScore}</span>
-    </span>
+    </Section>
   </div>
 );
 
