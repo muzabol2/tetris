@@ -23,6 +23,7 @@ const NextPiece = ({ nextPiece }: Props) => {
             <div
               key={`${rowIndex}-${colIndex}`}
               className={`h-full w-full ${cell ? "border bg-gray-700" : "bg-transparent"}`}
+              style={{ backgroundColor: cell ? nextPiece.color : "transparent" }}
             />
           ))
         )}
