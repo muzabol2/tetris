@@ -1,11 +1,12 @@
 "use client";
 import { COLS, ROWS } from "@/constants";
-import { GameStatus, type Piece } from "@/types";
+import { type GridCell, GameStatus, type Piece } from "@/types";
 import { ActivePiece } from "./ActivePiece";
 import { useBlockSize } from "@/hooks";
+import { Block } from "./Block";
 
 type Props = {
-  grid: number[][];
+  grid: GridCell[][];
   currentPiece: Piece | null;
   gameStatus: GameStatus;
 };
@@ -27,15 +28,7 @@ const GameBoard = ({ grid, currentPiece, gameStatus }: Props) => {
         }}
       >
         {grid.flat().map((cell, index) => (
-          <div
-            key={index}
-            className={`border ${cell ? "bg-gray-700" : "bg-gray-100"}`}
-            style={{
-              width: `${blockSize}px`,
-              height: `${blockSize}px`,
-              boxSizing: "border-box",
-            }}
-          />
+          <Block key={index} color={cell.color} size={blockSize} filled={cell.filled} />
         ))}
         {currentPiece && <ActivePiece currentPiece={currentPiece} />}
         {gameStatus === GameStatus.GAME_OVER && (

@@ -1,13 +1,17 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
 import { getRandomPiece, isCollision } from "@/utils";
-import { GameStatus, type Piece } from "@/types";
+import { GameStatus, type Piece, type GridCell } from "@/types";
 import { COLS, ROWS, SCORE_INCREMENT } from "@/constants";
 import { useHighScore } from "./useHighScore";
 
+const initialGrid: GridCell[][] = Array.from({ length: ROWS }, () =>
+  Array(COLS).fill({ filled: false, color: "transparent" })
+);
+
 const useTetris = () => {
   const { highScore, saveHighScore } = useHighScore();
-  const [grid, setGrid] = useState<number[][]>(Array.from({ length: ROWS }, () => Array(COLS).fill(0)));
+  const [grid, setGrid] = useState<GridCell[][]>(initialGrid);
   const [currentPiece, setCurrentPiece] = useState<Piece | null>(null);
   const [score, setScore] = useState<number>(0);
   const [gameStatus, setGameStatus] = useState<GameStatus>(GameStatus.NOT_STARTED);
@@ -92,7 +96,10 @@ const useTetris = () => {
     for (let y = 0; y < pieceToMerge.shape.length; y++) {
       for (let x = 0; x < pieceToMerge.shape[y].length; x++) {
         if (pieceToMerge.shape[y][x]) {
-          newGrid[pieceToMerge.y + y][pieceToMerge.x + x] = 1;
+          newGrid[pieceToMerge.y + y][pieceToMerge.x + x] = {
+            filled: true,
+            color: pieceToMerge.color,
+          };
         }
       }
     }
@@ -100,12 +107,18 @@ const useTetris = () => {
     checkForFullLines(newGrid);
   };
 
-  const checkForFullLines = (currentGrid: number[][]) => {
-    const newGrid = currentGrid.filter((row) => row.some((cell) => cell === 0));
+  const checkForFullLines = (currentGrid: GridCell[][]) => {
+    const newGrid = currentGrid.filter((row) => row.some((cell) => !cell.filled));
     const linesCleared = ROWS - newGrid.length;
 
     if (linesCleared > 0) {
-      newGrid.unshift(...Array.from({ length: linesCleared }, () => Array(COLS).fill(0)));
+      const emptyRow = Array.from({ length: COLS }, () => ({
+        filled: false,
+        color: "transparent",
+      }));
+
+      newGrid.unshift(...Array.from({ length: linesCleared }, () => emptyRow));
+
       setGrid(newGrid);
       setScore((prev) => prev + linesCleared * SCORE_INCREMENT);
     }

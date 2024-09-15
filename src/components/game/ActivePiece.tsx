@@ -1,6 +1,7 @@
 "use client";
 import { useBlockSize } from "@/hooks";
 import type { Piece } from "@/types";
+import { Block } from "./Block";
 
 type Props = {
   currentPiece: Piece;
@@ -24,15 +25,7 @@ const ActivePiece = ({ currentPiece }: Props) => {
     >
       {currentPiece.shape.map((row, rowIndex) =>
         row.map((cell, colIndex) => (
-          <div
-            key={`${rowIndex}-${colIndex}`}
-            className={`border ${cell ? "bg-gray-700" : "bg-transparent"}`}
-            style={{
-              width: `${blockSize}px`,
-              height: `${blockSize}px`,
-              boxSizing: "border-box",
-            }}
-          />
+          <Block key={`${rowIndex}-${colIndex}`} color={currentPiece.color} size={blockSize} filled={!!cell} />
         ))
       )}
     </div>

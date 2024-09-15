@@ -1,3 +1,3 @@
-export { GameStatus } from "./gameStatus";
-export type { IconProps } from "./IconProps";
-export type { Piece, PieceShape } from "./gamePiece";
+export * from "./IconProps";
+export * from "./gamePiece";
+export * from "./gameStatus";
