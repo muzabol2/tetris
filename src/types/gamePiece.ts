@@ -15,9 +15,10 @@ type Piece = {
 type GameState = {
   grid: Grid;
   currentPiece: Piece | null;
-  score: number;
-  gameStatus: GameStatus;
   nextPiece: Piece | null;
+  gameStatus: GameStatus;
+  level: number;
+  score: number;
   highScore: number;
 };
 

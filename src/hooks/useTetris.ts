@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
-import { getRandomPiece, isCollision, createEmptyGrid, createEmptyRow, initialState } from "@/utils";
+import { getRandomPiece, isCollision, createEmptyGrid, createEmptyRow, initialState, calculateSpeed } from "@/utils";
 import type { GameState, Piece, Grid } from "@/types";
-import { ROWS, SCORE_INCREMENT } from "@/constants";
+import { ROWS, SCORE_INCREMENT, LINES_PER_LEVEL } from "@/constants";
 import { useHighScore } from "./useHighScore";
 import { GameStatus } from "@/enums";
 
@@ -12,12 +12,13 @@ const useTetris = () => {
 
   useEffect(() => {
     if (state.gameStatus === GameStatus.RUNNING && state.currentPiece) {
-      const interval = setInterval(movePieceDown, 1000); // make this dynamic for level progression
+      const speed = calculateSpeed(state.level);
+      const interval = setInterval(movePieceDown, speed);
 
       return () => clearInterval(interval);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.currentPiece, state.gameStatus]);
+  }, [state.currentPiece, state.gameStatus, state.level]);
 
   const newGame = () => {
     setState({
@@ -26,6 +27,7 @@ const useTetris = () => {
       currentPiece: getRandomPiece(),
       nextPiece: getRandomPiece(),
       gameStatus: GameStatus.RUNNING,
+      level: 1,
     });
     (document.activeElement as HTMLElement)?.blur();
   };
@@ -105,11 +107,17 @@ const useTetris = () => {
     if (linesCleared > 0) {
       const emptyRows = Array.from({ length: linesCleared }, createEmptyRow);
 
-      setState((prevState) => ({
-        ...prevState,
-        grid: [...emptyRows, ...updatedGrid],
-        score: prevState.score + linesCleared * SCORE_INCREMENT,
-      }));
+      setState((prevState) => {
+        const newScore = prevState.score + linesCleared * SCORE_INCREMENT;
+        const newLevel = Math.floor(newScore / (LINES_PER_LEVEL * SCORE_INCREMENT)) + 1;
+
+        return {
+          ...prevState,
+          grid: [...emptyRows, ...updatedGrid],
+          score: newScore,
+          level: newLevel,
+        };
+      });
     }
   };
 

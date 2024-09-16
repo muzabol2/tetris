@@ -7,6 +7,8 @@ const createEmptyRow = () => Array.from({ length: COLS }, () => ({ filled: false
 
 const createEmptyGrid = (): Grid => Array.from({ length: ROWS }, createEmptyRow);
 
+const calculateSpeed = (level: number) => Math.max(1000 - level * 100, 100);
+
 const initialState: GameState = {
   grid: createEmptyGrid(),
   currentPiece: null,
@@ -14,6 +16,7 @@ const initialState: GameState = {
   gameStatus: GameStatus.NOT_STARTED,
   nextPiece: null,
   highScore: 0,
+  level: 1,
 };
 
 const getRandomPiece = (): Piece => {
@@ -53,4 +56,4 @@ const isCollision = (piece: Piece | null, grid: Grid): boolean => {
   return false;
 };
 
-export { createEmptyGrid, createEmptyRow, getRandomPiece, initialState, isCollision };
+export { calculateSpeed, createEmptyGrid, createEmptyRow, getRandomPiece, initialState, isCollision };
