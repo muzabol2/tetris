@@ -1,9 +1,10 @@
 "use client";
+
+import { Block, PieceGrid } from "../common";
 import { COLS, ROWS } from "@/constants";
-import type { GameState } from "@/types";
-import { useBlockSize } from "@/hooks";
-import { PieceGrid, Block } from "../common";
 import { GameStatus } from "@/enums";
+import { useBlockSize } from "@/hooks";
+import type { GameState } from "@/types";
 
 const GameBoard = ({ grid, currentPiece, gameStatus }: GameState) => {
   const blockSize = useBlockSize();

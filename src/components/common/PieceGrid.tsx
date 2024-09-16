@@ -1,6 +1,7 @@
 "use client";
-import type { Piece } from "@/types";
+
 import { Block } from "./Block";
+import type { Piece } from "@/types";
 
 type Props = {
   piece: Piece;

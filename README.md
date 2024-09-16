@@ -22,4 +22,4 @@ This project aims to develop a classic Tetris game from scratch using TypeScript
 - [x] Keep High score -> localStore
 - [x] Colored blocks
 - [x] Level progression and increasing speed
-- [ ] Save button to keep state of the game when refresh window -> localStore
+- [x] Keep state of the game when refresh window -> localStore
