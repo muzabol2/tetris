@@ -1,5 +1,5 @@
 "use client";
-import { COLS, ROWS, SHAPES } from "@/constants";
+import { COLS, LINES_PER_LEVEL, ROWS, SCORE_INCREMENT, SHAPES } from "@/constants";
 import { GameStatus } from "@/enums";
 import type { Grid, Piece, GameState } from "@/types";
 
@@ -12,12 +12,19 @@ const calculateSpeed = (level: number) => Math.max(1000 - level * 100, 100);
 const initialState: GameState = {
   grid: createEmptyGrid(),
   currentPiece: null,
-  score: 0,
-  gameStatus: GameStatus.NOT_STARTED,
   nextPiece: null,
+  gameStatus: GameStatus.NOT_STARTED,
+  score: 0,
   highScore: 0,
   level: 1,
 };
+
+const createNewGameState = (): GameState => ({
+  ...initialState,
+  currentPiece: getRandomPiece(),
+  nextPiece: getRandomPiece(),
+  gameStatus: GameStatus.RUNNING,
+});
 
 const getRandomPiece = (): Piece => {
   const keys = Object.keys(SHAPES);
@@ -56,4 +63,27 @@ const isCollision = (piece: Piece | null, grid: Grid): boolean => {
   return false;
 };
 
-export { calculateSpeed, createEmptyGrid, createEmptyRow, getRandomPiece, initialState, isCollision };
+const handleLineClearing = (grid: Grid, score: number, level: number) => {
+  const updatedGrid = grid.filter((row) => row.some((cell) => !cell.filled));
+  const linesCleared = ROWS - updatedGrid.length;
+
+  if (linesCleared === 0) {
+    return {
+      updatedGrid: grid,
+      newScore: score,
+      newLevel: level,
+    };
+  }
+
+  const emptyRows = Array.from({ length: linesCleared }, () => createEmptyRow());
+  const newScore = score + linesCleared * SCORE_INCREMENT;
+  const newLevel = Math.floor(newScore / (LINES_PER_LEVEL * SCORE_INCREMENT)) + 1;
+
+  return {
+    updatedGrid: [...emptyRows, ...updatedGrid],
+    newScore,
+    newLevel,
+  };
+};
+
+export { calculateSpeed, createNewGameState, getRandomPiece, handleLineClearing, initialState, isCollision };

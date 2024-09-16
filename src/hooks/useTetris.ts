@@ -1,10 +1,16 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
-import { getRandomPiece, isCollision, createEmptyGrid, createEmptyRow, initialState, calculateSpeed } from "@/utils";
-import type { GameState, Piece, Grid } from "@/types";
-import { ROWS, SCORE_INCREMENT, LINES_PER_LEVEL } from "@/constants";
+import {
+  getRandomPiece,
+  isCollision,
+  initialState,
+  calculateSpeed,
+  handleLineClearing,
+  createNewGameState,
+} from "@/utils";
+import type { GameState, Piece } from "@/types";
 import { useHighScore } from "./useHighScore";
-import { GameStatus } from "@/enums";
+import { GameStatus as S } from "@/enums";
 
 const GAME_STATE_KEY = "game_state";
 
@@ -32,7 +38,7 @@ const useTetris = () => {
   }, [state.nextPiece, isLoaded]);
 
   useEffect(() => {
-    if (state.gameStatus === GameStatus.RUNNING && state.currentPiece) {
+    if (state.gameStatus === S.RUNNING && state.currentPiece) {
       const speed = calculateSpeed(state.level);
       const interval = setInterval(movePieceDown, speed);
 
@@ -42,23 +48,15 @@ const useTetris = () => {
   }, [state.currentPiece, state.gameStatus, state.level]);
 
   const newGame = () => {
-    setState({
-      ...initialState,
-      grid: createEmptyGrid(),
-      currentPiece: getRandomPiece(),
-      nextPiece: getRandomPiece(),
-      gameStatus: GameStatus.RUNNING,
-      level: 1,
-    });
+    setState(createNewGameState());
     (document.activeElement as HTMLElement)?.blur();
   };
 
   const togglePauseResume = () => {
-    setState((prevState) => {
-      const newStatus = prevState.gameStatus === GameStatus.PAUSED ? GameStatus.RUNNING : GameStatus.PAUSED;
-
-      return { ...prevState, gameStatus: newStatus };
-    });
+    setState((prevState) => ({
+      ...prevState,
+      gameStatus: prevState.gameStatus === S.PAUSED ? S.RUNNING : S.PAUSED,
+    }));
 
     (document.activeElement as HTMLElement)?.blur();
   };
@@ -70,20 +68,23 @@ const useTetris = () => {
       mergePieceToGrid(state.currentPiece!);
       spawnNextPiece();
       if (isCollision(state.currentPiece!, state.grid)) {
-        setState((prevState) => ({ ...prevState, gameStatus: GameStatus.GAME_OVER }));
+        setState((prevState) => ({ ...prevState, gameStatus: S.GAME_OVER }));
         saveHighScore(state.score);
       }
     }
   };
 
   const movePieceDown = () => {
-    if (state.currentPiece && state.gameStatus === GameStatus.RUNNING) {
-      handlePieceMovement({ ...state.currentPiece, y: state.currentPiece.y + 1 });
+    if (state.currentPiece && state.gameStatus === S.RUNNING) {
+      handlePieceMovement({
+        ...state.currentPiece,
+        y: state.currentPiece.y + 1,
+      });
     }
   };
 
   const hardDrop = () => {
-    if (!state.currentPiece || state.gameStatus !== GameStatus.RUNNING) {
+    if (!state.currentPiece || state.gameStatus !== S.RUNNING) {
       return;
     }
 
@@ -118,7 +119,7 @@ const useTetris = () => {
       })
     );
 
-    const { updatedGrid, newScore, newLevel } = handleLineClearing(newGrid);
+    const { updatedGrid, newScore, newLevel } = handleLineClearing(newGrid, state.score, state.level);
 
     setState((prevState) => ({
       ...prevState,
@@ -126,29 +127,6 @@ const useTetris = () => {
       score: newScore,
       level: newLevel,
     }));
-  };
-
-  const handleLineClearing = (grid: Grid) => {
-    const updatedGrid = grid.filter((row) => row.some((cell) => !cell.filled));
-    const linesCleared = ROWS - updatedGrid.length;
-
-    if (linesCleared === 0) {
-      return {
-        updatedGrid: grid,
-        newScore: state.score,
-        newLevel: state.level,
-      };
-    }
-
-    const emptyRows = Array.from({ length: linesCleared }, createEmptyRow);
-    const newScore = state.score + linesCleared * SCORE_INCREMENT;
-    const newLevel = Math.floor(newScore / (LINES_PER_LEVEL * SCORE_INCREMENT)) + 1;
-
-    return {
-      updatedGrid: [...emptyRows, ...updatedGrid],
-      newScore,
-      newLevel,
-    };
   };
 
   const rotatePiece = () => {
@@ -169,7 +147,7 @@ const useTetris = () => {
 
   const handleKeyPress = useCallback(
     (e: KeyboardEvent) => {
-      if (!state.currentPiece || state.gameStatus !== GameStatus.RUNNING) {
+      if (!state.currentPiece || state.gameStatus !== S.RUNNING) {
         return;
       }
 
