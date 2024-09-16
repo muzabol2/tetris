@@ -124,7 +124,9 @@ const useTetris = () => {
 
     const newPiece = { ...state.currentPiece, shape: rotatedShape };
 
-    if (!isCollision(newPiece, state.grid)) setState((prevState) => ({ ...prevState, currentPiece: newPiece }));
+    if (!isCollision(newPiece, state.grid)) {
+      setState((prevState) => ({ ...prevState, currentPiece: newPiece }));
+    }
   };
 
   const handleKeyPress = useCallback(
