@@ -6,7 +6,11 @@ import { GameStatus } from "@/enums";
 import { useBlockSize } from "@/hooks";
 import type { GameState } from "@/types";
 
-const GameBoard = ({ grid, currentPiece, gameStatus }: GameState) => {
+type Props = GameState & {
+  rotatePiece: () => void;
+};
+
+const GameBoard = ({ grid, currentPiece, gameStatus, rotatePiece }: Props) => {
   const blockSize = useBlockSize();
 
   return (
@@ -34,6 +38,7 @@ const GameBoard = ({ grid, currentPiece, gameStatus }: GameState) => {
             top: `${currentPiece.y * blockSize}px`,
             left: `${currentPiece.x * blockSize}px`,
           }}
+          onClick={rotatePiece}
         />
       )}
 
