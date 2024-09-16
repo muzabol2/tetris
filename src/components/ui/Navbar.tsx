@@ -9,7 +9,10 @@ import { BrushIcon, BuyMeACoffeeIcon, GithubIcon, LogoIcon } from "@/icons";
 const Navbar = () => (
   <header className="fixed left-0 right-0 top-0 z-50 flex w-full justify-center bg-header shadow-md transition-colors duration-200">
     <div className="flex w-full max-w-7xl items-center justify-between p-4">
-      <h1 className="flex items-center gap-2 text-3xl font-bold text-foreground">
+      <h1
+        className="flex items-center cursor-pointer gap-2 text-3xl font-bold text-foreground"
+        onClick={() => (window.location.href = "/")}
+      >
         <LogoIcon />
         tetris
       </h1>
