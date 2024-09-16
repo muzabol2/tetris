@@ -96,29 +96,38 @@ const useTetris = () => {
         }
       })
     );
-    setState((prevState) => ({ ...prevState, grid: newGrid }));
-    checkForFullLines(newGrid);
+
+    const { updatedGrid, newScore, newLevel } = handleLineClearing(newGrid);
+
+    setState((prevState) => ({
+      ...prevState,
+      grid: updatedGrid,
+      score: newScore,
+      level: newLevel,
+    }));
   };
 
-  const checkForFullLines = (currentGrid: Grid) => {
-    const updatedGrid = currentGrid.filter((row) => row.some((cell) => !cell.filled));
+  const handleLineClearing = (grid: Grid) => {
+    const updatedGrid = grid.filter((row) => row.some((cell) => !cell.filled));
     const linesCleared = ROWS - updatedGrid.length;
 
-    if (linesCleared > 0) {
-      const emptyRows = Array.from({ length: linesCleared }, createEmptyRow);
-
-      setState((prevState) => {
-        const newScore = prevState.score + linesCleared * SCORE_INCREMENT;
-        const newLevel = Math.floor(newScore / (LINES_PER_LEVEL * SCORE_INCREMENT)) + 1;
-
-        return {
-          ...prevState,
-          grid: [...emptyRows, ...updatedGrid],
-          score: newScore,
-          level: newLevel,
-        };
-      });
+    if (linesCleared === 0) {
+      return {
+        updatedGrid: grid,
+        newScore: state.score,
+        newLevel: state.level,
+      };
     }
+
+    const emptyRows = Array.from({ length: linesCleared }, createEmptyRow);
+    const newScore = state.score + linesCleared * SCORE_INCREMENT;
+    const newLevel = Math.floor(newScore / (LINES_PER_LEVEL * SCORE_INCREMENT)) + 1;
+
+    return {
+      updatedGrid: [...emptyRows, ...updatedGrid],
+      newScore,
+      newLevel,
+    };
   };
 
   const rotatePiece = () => {
@@ -170,7 +179,11 @@ const useTetris = () => {
       return;
     }
 
-    const newPiece = { ...state.currentPiece, x: state.currentPiece.x + dx, y: state.currentPiece.y + dy };
+    const newPiece = {
+      ...state.currentPiece,
+      x: state.currentPiece.x + dx,
+      y: state.currentPiece.y + dy,
+    };
 
     if (!isCollision(newPiece, state.grid)) {
       setState((prevState) => ({ ...prevState, currentPiece: newPiece }));
