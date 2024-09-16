@@ -30,15 +30,13 @@ const useTetris = () => {
     (document.activeElement as HTMLElement)?.blur();
   };
 
-  const pauseGame = () => {
-    setState((prevState) => ({ ...prevState, gameStatus: GameStatus.PAUSED }));
-    (document.activeElement as HTMLElement)?.blur();
-  };
+  const togglePauseResume = () => {
+    setState((prevState) => {
+      const newStatus = prevState.gameStatus === GameStatus.PAUSED ? GameStatus.RUNNING : GameStatus.PAUSED;
 
-  const resumeGame = () => {
-    if (state.gameStatus !== GameStatus.GAME_OVER) {
-      setState((prevState) => ({ ...prevState, gameStatus: GameStatus.RUNNING }));
-    }
+      return { ...prevState, gameStatus: newStatus };
+    });
+
     (document.activeElement as HTMLElement)?.blur();
   };
 
@@ -177,7 +175,7 @@ const useTetris = () => {
 
   return {
     consts: { gameState: { ...state, highScore } },
-    funcs: { newGame, pauseGame, resumeGame, movePiece, movePieceDown, hardDrop, rotatePiece },
+    funcs: { newGame, togglePauseResume, movePiece, movePieceDown, hardDrop, rotatePiece },
   };
 };
 

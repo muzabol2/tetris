@@ -18,6 +18,7 @@ type GameState = {
   score: number;
   gameStatus: GameStatus;
   nextPiece: Piece | null;
+  highScore: number;
 };
 
 export type { GameState, Grid, Piece };

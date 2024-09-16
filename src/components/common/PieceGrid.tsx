@@ -2,13 +2,13 @@
 import type { Piece } from "@/types";
 import { Block } from "./Block";
 
-type PieceGridProps = {
+type Props = {
   piece: Piece;
   blockSize: number;
   style?: React.CSSProperties;
 };
 
-const PieceGrid = ({ piece, blockSize, style }: PieceGridProps) => (
+const PieceGrid = ({ piece, blockSize, style }: Props) => (
   <div
     style={{
       display: "grid",

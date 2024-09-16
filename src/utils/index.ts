@@ -13,6 +13,7 @@ const initialState: GameState = {
   score: 0,
   gameStatus: GameStatus.NOT_STARTED,
   nextPiece: null,
+  highScore: 0,
 };
 
 const getRandomPiece = (): Piece => {
