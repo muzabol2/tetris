@@ -6,9 +6,30 @@ import { ROWS, SCORE_INCREMENT, LINES_PER_LEVEL } from "@/constants";
 import { useHighScore } from "./useHighScore";
 import { GameStatus } from "@/enums";
 
+const GAME_STATE_KEY = "game_state";
+
 const useTetris = () => {
   const { highScore, saveHighScore } = useHighScore();
   const [state, setState] = useState<GameState>(initialState);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedState = localStorage.getItem(GAME_STATE_KEY);
+
+      if (savedState) {
+        setState(JSON.parse(savedState));
+      }
+      setIsLoaded(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isLoaded && typeof window !== "undefined") {
+      localStorage.setItem(GAME_STATE_KEY, JSON.stringify(state));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.nextPiece, isLoaded]);
 
   useEffect(() => {
     if (state.gameStatus === GameStatus.RUNNING && state.currentPiece) {
