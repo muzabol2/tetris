@@ -20,15 +20,19 @@ const GameMenu = ({ gameState, newGame, togglePauseResume }: Props) => (
       <span>{gameState.score}</span>
     </Section>
 
+    <Section title="Level:">
+      <span>{gameState.level}</span>
+    </Section>
+
+    <Section title="High Score:">
+      <span>{gameState.highScore}</span>
+    </Section>
+
     {gameState.nextPiece && (
       <Section title="Next:">
         <PieceGrid piece={gameState.nextPiece} blockSize={20} />
       </Section>
     )}
-
-    <Section title="High Score:">
-      <span>{gameState.highScore}</span>
-    </Section>
   </div>
 );
 

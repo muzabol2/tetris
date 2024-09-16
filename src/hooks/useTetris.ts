@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
-import { getRandomPiece, isCollision, createEmptyGrid, createEmptyRow, initialState } from "@/utils";
+import { getRandomPiece, isCollision, createEmptyGrid, createEmptyRow, initialState, calculateSpeed } from "@/utils";
 import type { GameState, Piece, Grid } from "@/types";
-import { ROWS, SCORE_INCREMENT } from "@/constants";
+import { ROWS, SCORE_INCREMENT, LINES_PER_LEVEL } from "@/constants";
 import { useHighScore } from "./useHighScore";
 import { GameStatus } from "@/enums";
 
@@ -12,12 +12,13 @@ const useTetris = () => {
 
   useEffect(() => {
     if (state.gameStatus === GameStatus.RUNNING && state.currentPiece) {
-      const interval = setInterval(movePieceDown, 1000); // make this dynamic for level progression
+      const speed = calculateSpeed(state.level);
+      const interval = setInterval(movePieceDown, speed);
 
       return () => clearInterval(interval);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.currentPiece, state.gameStatus]);
+  }, [state.currentPiece, state.gameStatus, state.level]);
 
   const newGame = () => {
     setState({
@@ -26,6 +27,7 @@ const useTetris = () => {
       currentPiece: getRandomPiece(),
       nextPiece: getRandomPiece(),
       gameStatus: GameStatus.RUNNING,
+      level: 1,
     });
     (document.activeElement as HTMLElement)?.blur();
   };
@@ -94,23 +96,38 @@ const useTetris = () => {
         }
       })
     );
-    setState((prevState) => ({ ...prevState, grid: newGrid }));
-    checkForFullLines(newGrid);
+
+    const { updatedGrid, newScore, newLevel } = handleLineClearing(newGrid);
+
+    setState((prevState) => ({
+      ...prevState,
+      grid: updatedGrid,
+      score: newScore,
+      level: newLevel,
+    }));
   };
 
-  const checkForFullLines = (currentGrid: Grid) => {
-    const updatedGrid = currentGrid.filter((row) => row.some((cell) => !cell.filled));
+  const handleLineClearing = (grid: Grid) => {
+    const updatedGrid = grid.filter((row) => row.some((cell) => !cell.filled));
     const linesCleared = ROWS - updatedGrid.length;
 
-    if (linesCleared > 0) {
-      const emptyRows = Array.from({ length: linesCleared }, createEmptyRow);
-
-      setState((prevState) => ({
-        ...prevState,
-        grid: [...emptyRows, ...updatedGrid],
-        score: prevState.score + linesCleared * SCORE_INCREMENT,
-      }));
+    if (linesCleared === 0) {
+      return {
+        updatedGrid: grid,
+        newScore: state.score,
+        newLevel: state.level,
+      };
     }
+
+    const emptyRows = Array.from({ length: linesCleared }, createEmptyRow);
+    const newScore = state.score + linesCleared * SCORE_INCREMENT;
+    const newLevel = Math.floor(newScore / (LINES_PER_LEVEL * SCORE_INCREMENT)) + 1;
+
+    return {
+      updatedGrid: [...emptyRows, ...updatedGrid],
+      newScore,
+      newLevel,
+    };
   };
 
   const rotatePiece = () => {
@@ -162,7 +179,11 @@ const useTetris = () => {
       return;
     }
 
-    const newPiece = { ...state.currentPiece, x: state.currentPiece.x + dx, y: state.currentPiece.y + dy };
+    const newPiece = {
+      ...state.currentPiece,
+      x: state.currentPiece.x + dx,
+      y: state.currentPiece.y + dy,
+    };
 
     if (!isCollision(newPiece, state.grid)) {
       setState((prevState) => ({ ...prevState, currentPiece: newPiece }));
