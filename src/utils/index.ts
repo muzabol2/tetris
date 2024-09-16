@@ -1,6 +1,20 @@
 "use client";
 import { COLS, ROWS, SHAPES } from "@/constants";
-import type { GridCell, Piece } from "@/types";
+import { GameStatus } from "@/enums";
+import type { Grid, Piece, GameState } from "@/types";
+
+const createEmptyRow = () => Array.from({ length: COLS }, () => ({ filled: false, color: "transparent" }));
+
+const createEmptyGrid = (): Grid => Array.from({ length: ROWS }, createEmptyRow);
+
+const initialState: GameState = {
+  grid: createEmptyGrid(),
+  currentPiece: null,
+  score: 0,
+  gameStatus: GameStatus.NOT_STARTED,
+  nextPiece: null,
+  highScore: 0,
+};
 
 const getRandomPiece = (): Piece => {
   const keys = Object.keys(SHAPES);
@@ -14,7 +28,7 @@ const getRandomPiece = (): Piece => {
   };
 };
 
-const isCollision = (piece: Piece | null, grid: GridCell[][]): boolean => {
+const isCollision = (piece: Piece | null, grid: Grid): boolean => {
   if (!piece) return true;
 
   for (let y = 0; y < piece.shape.length; y++) {
@@ -39,4 +53,4 @@ const isCollision = (piece: Piece | null, grid: GridCell[][]): boolean => {
   return false;
 };
 
-export { getRandomPiece, isCollision };
+export { createEmptyGrid, createEmptyRow, getRandomPiece, initialState, isCollision };

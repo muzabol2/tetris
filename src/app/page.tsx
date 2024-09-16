@@ -4,24 +4,16 @@ import { useIsMobile, useTetris } from "@/hooks";
 
 const Home = () => {
   const {
-    consts: { grid, currentPiece, nextPiece, gameStatus, score, highScore },
-    funcs: { newGame, pauseGame, resumeGame, movePiece, movePieceDown, hardDrop, rotatePiece },
+    consts: { gameState },
+    funcs: { newGame, togglePauseResume, movePiece, movePieceDown, hardDrop, rotatePiece },
   } = useTetris();
   const isMobile = useIsMobile();
 
   return (
     <div className="flex flex-col">
       <div className="flex gap-1">
-        <GameBoard grid={grid} currentPiece={currentPiece} gameStatus={gameStatus} />
-        <GameMenu
-          score={score}
-          highScore={highScore}
-          gameStatus={gameStatus}
-          nextPiece={nextPiece}
-          newGame={newGame}
-          pauseGame={pauseGame}
-          resumeGame={resumeGame}
-        />
+        <GameBoard {...gameState} />
+        <GameMenu gameState={gameState} newGame={newGame} togglePauseResume={togglePauseResume} />
       </div>
 
       {isMobile && (
