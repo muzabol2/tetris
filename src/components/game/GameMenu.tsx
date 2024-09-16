@@ -1,5 +1,6 @@
 "use client";
-import { PieceGrid, Section, PauseResumeButton } from "../common";
+
+import { PauseResumeButton, PieceGrid, Section } from "../common";
 import type { GameState } from "@/types";
 
 type Props = {

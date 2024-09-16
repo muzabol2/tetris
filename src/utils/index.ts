@@ -1,7 +1,8 @@
 "use client";
+
 import { COLS, LINES_PER_LEVEL, ROWS, SCORE_INCREMENT, SHAPES } from "@/constants";
 import { GameStatus } from "@/enums";
-import type { Grid, Piece, GameState } from "@/types";
+import type { GameState, Grid, Piece } from "@/types";
 
 const createEmptyRow = () => Array.from({ length: COLS }, () => ({ filled: false, color: "transparent" }));
 

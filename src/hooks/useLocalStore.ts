@@ -1,5 +1,5 @@
 import type { GameState } from "@/types";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const GAME_STATE_KEY = "game_state";
 

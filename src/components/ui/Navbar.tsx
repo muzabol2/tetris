@@ -1,7 +1,8 @@
 "use client";
-import { BuyMeACoffeeIcon, GithubIcon, LogoIcon } from "@/icons";
+
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import { URLS } from "@/constants";
+import { BuyMeACoffeeIcon, GithubIcon, LogoIcon } from "@/icons";
 
 const Navbar = () => (
   <header className="fixed left-0 right-0 top-0 z-50 flex w-full justify-center bg-header shadow-md transition-colors duration-200">

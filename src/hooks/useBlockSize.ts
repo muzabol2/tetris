@@ -1,6 +1,7 @@
 "use client";
-import { useState, useEffect } from "react";
+
 import { BLOCK_SIZE, COLS, ROWS } from "@/constants";
+import { useEffect, useState } from "react";
 
 const useBlockSize = () => {
   const [blockSize, setBlockSize] = useState<number>(BLOCK_SIZE);

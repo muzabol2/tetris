@@ -1,4 +1,5 @@
 "use client";
+
 import { GameStatus } from "@/enums";
 
 type Props = {

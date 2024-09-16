@@ -1,17 +1,18 @@
 "use client";
-import { useEffect, useCallback } from "react";
-import {
-  getRandomPiece,
-  isCollision,
-  initialState,
-  calculateSpeed,
-  handleLineClearing,
-  createNewGameState,
-} from "@/utils";
-import type { Piece } from "@/types";
+
 import { useHighScore } from "./useHighScore";
-import { GameStatus as S } from "@/enums";
 import { useLocalStorage } from "./useLocalStore";
+import { GameStatus as S } from "@/enums";
+import type { Piece } from "@/types";
+import {
+  calculateSpeed,
+  createNewGameState,
+  getRandomPiece,
+  handleLineClearing,
+  initialState,
+  isCollision,
+} from "@/utils";
+import { useCallback, useEffect } from "react";
 
 const useTetris = () => {
   const { highScore, saveHighScore } = useHighScore();
