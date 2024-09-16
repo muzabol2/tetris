@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useCallback } from "react";
+import { useEffect, useCallback } from "react";
 import {
   getRandomPiece,
   isCollision,
@@ -8,34 +8,14 @@ import {
   handleLineClearing,
   createNewGameState,
 } from "@/utils";
-import type { GameState, Piece } from "@/types";
+import type { Piece } from "@/types";
 import { useHighScore } from "./useHighScore";
 import { GameStatus as S } from "@/enums";
-
-const GAME_STATE_KEY = "game_state";
+import { useLocalStorage } from "./useLocalStore";
 
 const useTetris = () => {
   const { highScore, saveHighScore } = useHighScore();
-  const [state, setState] = useState<GameState>(initialState);
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const savedState = localStorage.getItem(GAME_STATE_KEY);
-
-      if (savedState) {
-        setState(JSON.parse(savedState));
-      }
-      setIsLoaded(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (isLoaded && typeof window !== "undefined") {
-      localStorage.setItem(GAME_STATE_KEY, JSON.stringify(state));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.nextPiece, isLoaded]);
+  const [state, setState] = useLocalStorage(initialState);
 
   useEffect(() => {
     if (state.gameStatus === S.RUNNING && state.currentPiece) {
