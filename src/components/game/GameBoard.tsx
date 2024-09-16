@@ -1,16 +1,11 @@
 "use client";
 import { COLS, ROWS } from "@/constants";
-import { type GridCell, GameStatus, type Piece } from "@/types";
+import type { GameState } from "@/types";
 import { useBlockSize } from "@/hooks";
 import { PieceGrid, Block } from "../common";
+import { GameStatus } from "@/enums";
 
-type Props = {
-  grid: GridCell[][];
-  currentPiece: Piece | null;
-  gameStatus: GameStatus;
-};
-
-const GameBoard = ({ grid, currentPiece, gameStatus }: Props) => {
+const GameBoard = ({ grid, currentPiece, gameStatus }: GameState) => {
   const blockSize = useBlockSize();
 
   return (

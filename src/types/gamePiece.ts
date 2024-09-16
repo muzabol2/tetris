@@ -1,7 +1,9 @@
-type GridCell = {
+import type { GameStatus } from "@/enums";
+
+type Grid = {
   filled: boolean;
   color: string;
-};
+}[][];
 
 type Piece = {
   shape: number[][];
@@ -10,4 +12,12 @@ type Piece = {
   y: number;
 };
 
-export type { GridCell, Piece };
+type GameState = {
+  grid: Grid;
+  currentPiece: Piece | null;
+  score: number;
+  gameStatus: GameStatus;
+  nextPiece: Piece | null;
+};
+
+export type { GameState, Grid, Piece };

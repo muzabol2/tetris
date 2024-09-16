@@ -1,132 +1,139 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
-import { getRandomPiece, isCollision } from "@/utils";
-import { GameStatus, type Piece, type GridCell } from "@/types";
-import { COLS, ROWS, SCORE_INCREMENT } from "@/constants";
+import { getRandomPiece, isCollision, createEmptyGrid, createEmptyRow, initialState } from "@/utils";
+import type { GameState, Piece, Grid } from "@/types";
+import { ROWS, SCORE_INCREMENT } from "@/constants";
 import { useHighScore } from "./useHighScore";
-
-const initialGrid: GridCell[][] = Array.from({ length: ROWS }, () =>
-  Array(COLS).fill({ filled: false, color: "transparent" })
-);
+import { GameStatus } from "@/enums";
 
 const useTetris = () => {
   const { highScore, saveHighScore } = useHighScore();
-  const [grid, setGrid] = useState<GridCell[][]>(initialGrid);
-  const [currentPiece, setCurrentPiece] = useState<Piece | null>(null);
-  const [score, setScore] = useState<number>(0);
-  const [gameStatus, setGameStatus] = useState<GameStatus>(GameStatus.NOT_STARTED);
-  const [nextPiece, setNextPiece] = useState<Piece | null>(null);
+  const [state, setState] = useState<GameState>(initialState);
 
   useEffect(() => {
-    if (gameStatus === GameStatus.RUNNING && currentPiece) {
-      const interval = setInterval(() => {
-        movePieceDown();
-      }, 1000);
+    if (state.gameStatus === GameStatus.RUNNING && state.currentPiece) {
+      const interval = setInterval(movePieceDown, 1000); // make this dynamic for level progression
 
       return () => clearInterval(interval);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPiece, gameStatus]);
+  }, [state.currentPiece, state.gameStatus]);
 
   const newGame = () => {
-    setGrid(Array.from({ length: ROWS }, () => Array(COLS).fill(0)));
-    setScore(0);
-    setCurrentPiece(getRandomPiece());
-    setNextPiece(getRandomPiece());
-    setGameStatus(GameStatus.RUNNING);
+    setState({
+      ...initialState,
+      grid: createEmptyGrid(),
+      currentPiece: getRandomPiece(),
+      nextPiece: getRandomPiece(),
+      gameStatus: GameStatus.RUNNING,
+    });
     (document.activeElement as HTMLElement)?.blur();
   };
 
   const pauseGame = () => {
-    setGameStatus(GameStatus.PAUSED);
+    setState((prevState) => ({ ...prevState, gameStatus: GameStatus.PAUSED }));
     (document.activeElement as HTMLElement)?.blur();
   };
 
   const resumeGame = () => {
-    if (gameStatus !== GameStatus.GAME_OVER) {
-      setGameStatus(GameStatus.RUNNING);
+    if (state.gameStatus !== GameStatus.GAME_OVER) {
+      setState((prevState) => ({ ...prevState, gameStatus: GameStatus.RUNNING }));
     }
     (document.activeElement as HTMLElement)?.blur();
   };
 
-  const generatePiece = () => {
-    setCurrentPiece(nextPiece);
-    setNextPiece(getRandomPiece());
+  const handlePieceMovement = (newPiece: Piece) => {
+    if (!isCollision(newPiece, state.grid)) {
+      setState((prevState) => ({ ...prevState, currentPiece: newPiece }));
+    } else {
+      mergePieceToGrid(state.currentPiece!);
+      spawnNextPiece();
+      if (isCollision(state.currentPiece!, state.grid)) {
+        setState((prevState) => ({ ...prevState, gameStatus: GameStatus.GAME_OVER }));
+        saveHighScore(state.score);
+      }
+    }
   };
 
   const movePieceDown = () => {
-    if (!currentPiece || gameStatus !== GameStatus.RUNNING) return;
-
-    const newPiece = { ...currentPiece, y: currentPiece.y + 1 };
-
-    handlePieceMovement(newPiece);
+    if (state.currentPiece && state.gameStatus === GameStatus.RUNNING) {
+      handlePieceMovement({ ...state.currentPiece, y: state.currentPiece.y + 1 });
+    }
   };
 
   const hardDrop = () => {
-    if (!currentPiece || gameStatus !== GameStatus.RUNNING) return;
+    if (!state.currentPiece || state.gameStatus !== GameStatus.RUNNING) {
+      return;
+    }
 
-    const newPiece = { ...currentPiece };
+    const newPiece = { ...state.currentPiece };
 
-    while (!isCollision({ ...newPiece, y: newPiece.y + 1 }, grid)) {
+    while (!isCollision({ ...newPiece, y: newPiece.y + 1 }, state.grid)) {
       newPiece.y += 1;
     }
 
     handlePieceMovement(newPiece);
   };
 
-  const handlePieceMovement = (newPiece: Piece) => {
-    if (!isCollision(newPiece, grid)) {
-      setCurrentPiece(newPiece);
-    } else {
-      mergePiece(currentPiece);
-      generatePiece();
-
-      if (isCollision(currentPiece, grid)) {
-        setGameStatus(GameStatus.GAME_OVER);
-        saveHighScore(score);
-      }
-    }
+  const spawnNextPiece = () => {
+    setState((prevState) => ({
+      ...prevState,
+      currentPiece: state.nextPiece,
+      nextPiece: getRandomPiece(),
+    }));
   };
 
-  const mergePiece = (pieceToMerge: Piece | null) => {
-    if (!pieceToMerge) return;
+  const mergePieceToGrid = (piece: Piece) => {
+    const newGrid = state.grid.map((row) => row.slice());
 
-    const newGrid = grid.map((row) => row.slice());
-
-    for (let y = 0; y < pieceToMerge.shape.length; y++) {
-      for (let x = 0; x < pieceToMerge.shape[y].length; x++) {
-        if (pieceToMerge.shape[y][x]) {
-          newGrid[pieceToMerge.y + y][pieceToMerge.x + x] = {
+    piece.shape.forEach((row, y) =>
+      row.forEach((value, x) => {
+        if (value) {
+          newGrid[piece.y + y][piece.x + x] = {
             filled: true,
-            color: pieceToMerge.color,
+            color: piece.color,
           };
         }
-      }
-    }
-    setGrid(newGrid);
+      })
+    );
+    setState((prevState) => ({ ...prevState, grid: newGrid }));
     checkForFullLines(newGrid);
   };
 
-  const checkForFullLines = (currentGrid: GridCell[][]) => {
-    const newGrid = currentGrid.filter((row) => row.some((cell) => !cell.filled));
-    const linesCleared = ROWS - newGrid.length;
+  const checkForFullLines = (currentGrid: Grid) => {
+    const updatedGrid = currentGrid.filter((row) => row.some((cell) => !cell.filled));
+    const linesCleared = ROWS - updatedGrid.length;
 
     if (linesCleared > 0) {
-      const emptyRow = Array.from({ length: COLS }, () => ({
-        filled: false,
-        color: "transparent",
+      const emptyRows = Array.from({ length: linesCleared }, createEmptyRow);
+
+      setState((prevState) => ({
+        ...prevState,
+        grid: [...emptyRows, ...updatedGrid],
+        score: prevState.score + linesCleared * SCORE_INCREMENT,
       }));
-
-      newGrid.unshift(...Array.from({ length: linesCleared }, () => emptyRow));
-
-      setGrid(newGrid);
-      setScore((prev) => prev + linesCleared * SCORE_INCREMENT);
     }
+  };
+
+  const rotatePiece = () => {
+    if (!state.currentPiece) {
+      return;
+    }
+
+    const rotatedShape = state.currentPiece.shape[0]
+      .map((_, i) => state.currentPiece!.shape.map((row) => row[i]))
+      .reverse();
+
+    const newPiece = { ...state.currentPiece, shape: rotatedShape };
+
+    if (!isCollision(newPiece, state.grid)) setState((prevState) => ({ ...prevState, currentPiece: newPiece }));
   };
 
   const handleKeyPress = useCallback(
     (e: KeyboardEvent) => {
-      if (!currentPiece || gameStatus !== GameStatus.RUNNING) return;
+      if (!state.currentPiece || state.gameStatus !== GameStatus.RUNNING) {
+        return;
+      }
 
       switch (e.key) {
         case "ArrowLeft":
@@ -147,44 +154,29 @@ const useTetris = () => {
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [currentPiece, gameStatus]
+    [state.currentPiece, state.gameStatus]
   );
 
   const movePiece = (dx: number, dy: number) => {
-    if (!currentPiece) return;
-
-    const newPiece = {
-      ...currentPiece,
-      x: currentPiece.x + dx,
-      y: currentPiece.y + dy,
-    };
-
-    if (!isCollision(newPiece, grid)) {
-      setCurrentPiece(newPiece);
+    if (!state.currentPiece) {
+      return;
     }
-  };
 
-  const rotatePiece = () => {
-    if (!currentPiece) return;
+    const newPiece = { ...state.currentPiece, x: state.currentPiece.x + dx, y: state.currentPiece.y + dy };
 
-    const rotatedShape = currentPiece.shape[0].map((_, i) => currentPiece.shape.map((row) => row[i])).reverse();
-    const newPiece = { ...currentPiece, shape: rotatedShape };
-
-    if (!isCollision(newPiece, grid)) {
-      setCurrentPiece(newPiece);
+    if (!isCollision(newPiece, state.grid)) {
+      setState((prevState) => ({ ...prevState, currentPiece: newPiece }));
     }
   };
 
   useEffect(() => {
     window.addEventListener("keydown", handleKeyPress);
 
-    return () => {
-      window.removeEventListener("keydown", handleKeyPress);
-    };
+    return () => window.removeEventListener("keydown", handleKeyPress);
   }, [handleKeyPress]);
 
   return {
-    consts: { grid, currentPiece, nextPiece, gameStatus, score, highScore },
+    consts: { gameState: { ...state, highScore } },
     funcs: { newGame, pauseGame, resumeGame, movePiece, movePieceDown, hardDrop, rotatePiece },
   };
 };

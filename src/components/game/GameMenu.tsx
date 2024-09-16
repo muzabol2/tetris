@@ -1,6 +1,7 @@
 "use client";
-import { GameStatus, type Piece } from "@/types";
+import { GameStatus } from "@/enums";
 import { PieceGrid, Section } from "../common";
+import type { Piece } from "@/types";
 
 type Props = {
   score: number;

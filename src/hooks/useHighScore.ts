@@ -19,9 +19,6 @@ const useHighScore = () => {
       const currentHighScore = localStorage.getItem(HIGH_SCORE_KEY);
       const highScoreNumber = currentHighScore ? parseInt(currentHighScore, 10) : 0;
 
-      console.log("Current High Score:", highScoreNumber);
-      console.log("New Score:", score);
-
       if (score > highScoreNumber) {
         localStorage.setItem(HIGH_SCORE_KEY, score.toString());
         setHighScore(score);
