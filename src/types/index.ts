@@ -1,2 +1,2 @@
 export * from "./gamePiece";
-export * from "./iconProps";
+export * from "./icon-Props";
