@@ -7,9 +7,10 @@ type Props = {
   piece: Piece;
   blockSize: number;
   style?: React.CSSProperties;
+  onClick?: () => void;
 };
 
-const PieceGrid = ({ piece, blockSize, style }: Props) => (
+const PieceGrid = ({ piece, blockSize, style, onClick }: Props) => (
   <div
     style={{
       display: "grid",
@@ -20,6 +21,7 @@ const PieceGrid = ({ piece, blockSize, style }: Props) => (
       boxSizing: "border-box",
       ...style,
     }}
+    onClick={onClick}
   >
     {piece.shape.map((row, rowIndex) =>
       row.map((cell, colIndex) => (

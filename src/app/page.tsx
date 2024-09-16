@@ -13,7 +13,7 @@ const Home = () => {
   return (
     <div className="flex flex-col">
       <div className="flex gap-1">
-        <GameBoard {...gameState} />
+        <GameBoard {...gameState} rotatePiece={rotatePiece} />
         <GameMenu gameState={gameState} newGame={newGame} togglePauseResume={togglePauseResume} />
       </div>
 
