@@ -3,6 +3,7 @@
 import { PieceGrid } from "../common";
 import { SHAPES } from "@/constants";
 import { useColorContext } from "@/context";
+import { useFeedbackMsg } from "@/hooks";
 import { getDefaultColors } from "@/utils";
 import { useEffect, useState } from "react";
 
@@ -12,6 +13,7 @@ export const ColorPicker = () => {
   const { colors, setColors } = useColorContext();
   const [selectedShape, setSelectedShape] = useState<ShapeKey | null>(null);
   const [tempColors, setTempColors] = useState<Record<ShapeKey, string>>(getDefaultColors);
+  const [feedbackMessage, showMessage] = useFeedbackMsg();
 
   useEffect(() => {
     setTempColors(colors as Record<ShapeKey, string>);
@@ -30,6 +32,7 @@ export const ColorPicker = () => {
 
   const applyColors = () => {
     setColors(tempColors);
+    showMessage("Colors applied");
   };
 
   const resetToDefault = () => {
@@ -43,6 +46,7 @@ export const ColorPicker = () => {
     );
 
     setTempColors(defaultColors);
+    showMessage("Colors reset to default.");
   };
 
   return (
@@ -80,6 +84,9 @@ export const ColorPicker = () => {
           Apply
         </button>
       </div>
+      {feedbackMessage && (
+        <div className="mt-4 p-2 bg-green-100 text-green-700 border border-green-200 rounded">{feedbackMessage}</div>
+      )}
     </div>
   );
 };
