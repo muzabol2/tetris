@@ -1,3 +1,4 @@
+export { BrushIcon } from "./BrushIcon";
 export { BuyMeACoffeeIcon } from "./BuyMeACoffeeIcon";
 export { GithubIcon } from "./GithubIcon";
 export { LogoIcon } from "./LogoIcon";

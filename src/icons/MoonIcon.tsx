@@ -9,7 +9,7 @@ const MoonIcon = ({ width = "24px", height = "24px", color = "black", onClick }:
       strokeLinecap="round"
       strokeMiterlimit="10"
       strokeWidth="30"
-    />{" "}
+    />
   </svg>
 );
 
