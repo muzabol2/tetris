@@ -2,16 +2,20 @@
 
 import { Block, PieceGrid } from "../common";
 import { COLS, ROWS } from "@/constants";
-import { GameStatus } from "@/enums";
+import { useTetrisContext } from "@/context";
+import { TetrisAction as A, GameStatus } from "@/enums";
 import { useBlockSize } from "@/hooks";
-import type { GameState } from "@/types";
 
-type Props = GameState & {
-  rotatePiece: () => void;
-};
-
-const GameBoard = ({ grid, currentPiece, gameStatus, rotatePiece }: Props) => {
+const GameBoard = () => {
   const blockSize = useBlockSize();
+  const {
+    state: { grid, currentPiece, gameStatus },
+    dispatch,
+  } = useTetrisContext();
+
+  const rotatePiece = () => {
+    dispatch({ type: A.ROTATE_PIECE });
+  };
 
   return (
     <div

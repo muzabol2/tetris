@@ -1,5 +1,6 @@
 "use client";
 
+import { getDefaultColors } from "./getDefaultColors";
 import { COLS, LINES_PER_LEVEL, ROWS, SCORE_INCREMENT, SHAPES } from "@/constants";
 import { GameStatus } from "@/enums";
 import type { GameState, Grid, Piece } from "@/types";
@@ -18,6 +19,7 @@ const initialState: GameState = {
   score: 0,
   highScore: 0,
   level: 1,
+  colors: getDefaultColors(),
 };
 
 const createNewGameState = (colors: Record<string, string>): GameState => ({
