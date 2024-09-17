@@ -2,6 +2,7 @@
 
 import { useHighScore } from "./useHighScore";
 import { useLocalStorage } from "./useLocalStore";
+import { useColorContext } from "@/context";
 import { GameStatus as S } from "@/enums";
 import type { Piece } from "@/types";
 import {
@@ -17,6 +18,7 @@ import { useCallback, useEffect } from "react";
 const useTetris = () => {
   const { highScore, saveHighScore } = useHighScore();
   const [state, setState] = useLocalStorage(initialState);
+  const { colors } = useColorContext();
 
   useEffect(() => {
     if (state.gameStatus === S.RUNNING && state.currentPiece) {
@@ -29,7 +31,7 @@ const useTetris = () => {
   }, [state.currentPiece, state.gameStatus, state.level]);
 
   const newGame = () => {
-    setState(createNewGameState());
+    setState(createNewGameState(colors));
     (document.activeElement as HTMLElement)?.blur();
   };
 
@@ -82,7 +84,7 @@ const useTetris = () => {
     setState((prevState) => ({
       ...prevState,
       currentPiece: state.nextPiece,
-      nextPiece: getRandomPiece(),
+      nextPiece: getRandomPiece(colors),
     }));
   };
 

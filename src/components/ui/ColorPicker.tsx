@@ -1,67 +1,70 @@
+"use client";
+
 import { PieceGrid } from "../common";
 import { SHAPES } from "@/constants";
+import { useColorContext } from "@/context";
+import { getDefaultColors } from "@/utils";
 import { useEffect, useState } from "react";
 
 type ShapeKey = "I" | "J" | "L" | "O" | "S" | "T" | "Z";
 
 export const ColorPicker = () => {
-  const [colors, setColors] = useState<Record<ShapeKey, string>>({
-    I: "#00BFFF",
-    J: "#00008B",
-    L: "#FF8C00",
-    O: "#FFD700",
-    S: "#32CD32",
-    T: "#800080",
-    Z: "#B22222",
-  });
-  const [selectedShape, setSelectedShape] = useState<string | null>(null);
+  const { colors, setColors } = useColorContext();
+  const [selectedShape, setSelectedShape] = useState<ShapeKey | null>(null);
+  const [tempColors, setTempColors] = useState<Record<ShapeKey, string>>(getDefaultColors);
 
-  // Load saved colors from localStorage
   useEffect(() => {
-    const savedColors = localStorage.getItem("tetris-colors");
-
-    if (savedColors) {
-      setColors(JSON.parse(savedColors));
-    }
-  }, []);
-
-  // Save colors to localStorage
-  useEffect(() => {
-    localStorage.setItem("tetris-colors", JSON.stringify(colors));
+    setTempColors(colors as Record<ShapeKey, string>);
   }, [colors]);
 
-  const handleColorChange = (shape: string, color: string) => {
-    setColors({ ...colors, [shape]: color });
+  const handleColorChange = (shape: ShapeKey, color: string) => {
+    setTempColors((prevColors) => ({
+      ...prevColors,
+      [shape]: color,
+    }));
   };
 
-  const handleBlockClick = (shape: string) => {
+  const handleBlockClick = (shape: ShapeKey) => {
     setSelectedShape(shape);
   };
 
   const applyColors = () => {
-    console.log("Applying colors", colors);
+    setColors(tempColors);
+  };
+
+  const resetToDefault = () => {
+    const defaultColors = Object.keys(SHAPES).reduce(
+      (acc, key) => {
+        acc[key as ShapeKey] = SHAPES[key as ShapeKey].color;
+
+        return acc;
+      },
+      {} as Record<ShapeKey, string>
+    );
+
+    setTempColors(defaultColors);
   };
 
   return (
-    <div>
+    <div className="flex flex-col gap-4">
       <div className="grid grid-cols-2 gap-4">
-        {Object.keys(colors).map((shapeKey) => (
+        {Object.keys(SHAPES).map((shapeKey) => (
           <div key={shapeKey} className="flex items-center cursor-pointer justify-center">
             <PieceGrid
               piece={{
-                shape: SHAPES[shapeKey].shape,
-                color: colors[shapeKey as ShapeKey],
+                shape: SHAPES[shapeKey as ShapeKey].shape,
+                color: tempColors[shapeKey as ShapeKey] || SHAPES[shapeKey as ShapeKey].color,
                 x: 0,
                 y: 0,
               }}
               blockSize={20}
-              onClick={() => handleBlockClick(shapeKey)}
+              onClick={() => handleBlockClick(shapeKey as ShapeKey)}
             />
             {selectedShape === shapeKey && (
               <input
                 type="color"
-                value={colors[shapeKey as ShapeKey]}
-                onChange={(e) => handleColorChange(shapeKey, e.target.value)}
+                value={tempColors[shapeKey as ShapeKey] || SHAPES[shapeKey as ShapeKey].color}
+                onChange={(e) => handleColorChange(shapeKey as ShapeKey, e.target.value)}
                 className="border border-border ml-2 cursor-pointer"
               />
             )}
@@ -69,9 +72,14 @@ export const ColorPicker = () => {
         ))}
       </div>
 
-      <button onClick={applyColors} className="absolute bottom-4 right-4 rounded bg-buttonBg text-buttonText p-2">
-        Apply
-      </button>
+      <div className="flex justify-end gap-2">
+        <button onClick={resetToDefault} className="rounded bg-red-500 text-white p-2">
+          Reset
+        </button>
+        <button onClick={applyColors} className="rounded bg-buttonBg text-buttonText p-2">
+          Apply
+        </button>
+      </div>
     </div>
   );
 };
