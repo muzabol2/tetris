@@ -2,7 +2,8 @@
 
 import { PieceGrid } from "../common";
 import { SHAPES } from "@/constants";
-import { useColorContext } from "@/context";
+import { useTetrisContext } from "@/context";
+import { TetrisAction as A } from "@/enums";
 import { useFeedbackMsg } from "@/hooks";
 import { getDefaultColors } from "@/utils";
 import { useEffect, useState } from "react";
@@ -10,7 +11,10 @@ import { useEffect, useState } from "react";
 type ShapeKey = "I" | "J" | "L" | "O" | "S" | "T" | "Z";
 
 export const ColorPicker = () => {
-  const { colors, setColors } = useColorContext();
+  const {
+    state: { colors },
+    dispatch,
+  } = useTetrisContext();
   const [selectedShape, setSelectedShape] = useState<ShapeKey | null>(null);
   const [tempColors, setTempColors] = useState<Record<ShapeKey, string>>(getDefaultColors);
   const [feedbackMessage, showMessage] = useFeedbackMsg();
@@ -31,7 +35,7 @@ export const ColorPicker = () => {
   };
 
   const applyColors = () => {
-    setColors(tempColors);
+    dispatch({ type: A.SET_COLORS, payload: { colors: tempColors } });
     showMessage("Colors applied");
   };
 

@@ -1,3 +1,5 @@
+"use client";
+
 import { SHAPES } from "@/constants";
 
 const getDefaultColors = () =>

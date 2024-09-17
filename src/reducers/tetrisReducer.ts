@@ -1,3 +1,5 @@
+"use client";
+
 import { TetrisAction as A, GameStatus as S } from "@/enums";
 import type { GameActions, GameState } from "@/types";
 import { createNewGameState, getRandomPiece, handleLineClearing, isCollision } from "@/utils";
@@ -139,6 +141,12 @@ const tetrisReducer = (state: GameState, action: GameActions): GameState => {
         ...state,
         currentPiece: state.nextPiece,
         nextPiece: getRandomPiece(state.colors),
+      };
+
+    case A.SET_COLORS:
+      return {
+        ...state,
+        colors: action.payload.colors,
       };
 
     default:

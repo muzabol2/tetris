@@ -1,20 +1,19 @@
 "use client";
 
 import { PauseResumeButton, PieceGrid, Section } from "../common";
-import { useColorContext, useTetrisContext } from "@/context";
-import { TetrisAction } from "@/enums";
+import { useTetrisContext } from "@/context";
+import { TetrisAction as A } from "@/enums";
 
 const GameMenu = () => {
-  const { colors } = useColorContext();
   const { state, dispatch } = useTetrisContext();
 
   const newGame = () => {
-    dispatch({ type: TetrisAction.NEW_GAME, payload: { colors } });
+    dispatch({ type: A.NEW_GAME });
     (document.activeElement as HTMLElement)?.blur();
   };
 
   const togglePauseResume = () => {
-    dispatch({ type: TetrisAction.TOGGLE_PAUSE_RESUME });
+    dispatch({ type: A.TOGGLE_PAUSE_RESUME });
     (document.activeElement as HTMLElement)?.blur();
   };
 
