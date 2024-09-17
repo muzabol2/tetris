@@ -1,8 +1,8 @@
 "use client";
 
+import { Popover, PopoverContent, PopoverTrigger } from "../common";
 import { ColorPicker } from "./ColorPicker";
 import { ThemeSwitcher } from "./ThemeSwitcher";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/Popover";
 import { URLS } from "@/constants";
 import { BrushIcon, BuyMeACoffeeIcon, GithubIcon, LogoIcon } from "@/icons";
 
