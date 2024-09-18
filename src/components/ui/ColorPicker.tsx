@@ -11,17 +11,14 @@ import { useEffect, useState } from "react";
 type ShapeKey = "I" | "J" | "L" | "O" | "S" | "T" | "Z";
 
 export const ColorPicker = () => {
-  const {
-    state: { colors },
-    dispatch,
-  } = useTetrisContext();
+  const { state, dispatch } = useTetrisContext();
   const [selectedShape, setSelectedShape] = useState<ShapeKey | null>(null);
   const [tempColors, setTempColors] = useState<Record<ShapeKey, string>>(getDefaultColors);
   const [feedbackMessage, showMessage] = useFeedbackMsg();
 
   useEffect(() => {
-    setTempColors(colors as Record<ShapeKey, string>);
-  }, [colors]);
+    setTempColors(state.colors as Record<ShapeKey, string>);
+  }, [state.colors]);
 
   const handleColorChange = (shape: ShapeKey, color: string) => {
     setTempColors((prevColors) => ({

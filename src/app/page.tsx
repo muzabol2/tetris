@@ -1,10 +1,9 @@
 "use client";
 
 import { GameBoard, GameMenu, MobileControls } from "@/components";
-import { useIsMobile, useTetris } from "@/hooks";
+import { useIsMobile } from "@/hooks";
 
 const Home = () => {
-  useTetris();
   const isMobile = useIsMobile();
 
   return (

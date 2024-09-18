@@ -40,7 +40,8 @@
     "import/prefer-default-export": "off",
     "import/group-exports": "error",
     "import/exports-last": "error",
-    "sort-exports/sort-exports": ["error", { "sortDir": "asc" }]
+    "sort-exports/sort-exports": ["error", { "sortDir": "asc" }],
+    "react-hooks/exhaustive-deps": "off"
   },
   "overrides": [
     {
