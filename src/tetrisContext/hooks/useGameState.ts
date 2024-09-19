@@ -1,13 +1,16 @@
+"use client";
+
 import type { Actions } from "../actions";
 import { reducer } from "../reducer";
 import { useLocalStorage } from "./useLocalStorage";
+import { GAME_STATE_KEY, GAME_VERSION } from "@/constants";
 import { TetrisAction as A, GameStatus as S } from "@/enums";
 import type { GameState } from "@/types";
 import { calculateSpeed, initialState } from "@/utils";
 import { useCallback, useEffect, useReducer, useState } from "react";
 
 const useGameState = () => {
-  const [localState, setLocalState] = useLocalStorage<GameState>("game_state", initialState);
+  const [localState, setLocalState] = useLocalStorage<GameState>(initialState, GAME_STATE_KEY, GAME_VERSION);
   const [state, dispatch] = useReducer(reducer, localState);
   const [isMounted, setIsMounted] = useState(false);
 
@@ -21,7 +24,7 @@ const useGameState = () => {
 
   useEffect(() => {
     setLocalState(state);
-  }, [state.currentPiece, state.colors]);
+  }, [state?.currentPiece, state?.colors]);
 
   useEffect(() => {
     if (state.gameStatus === S.RUNNING && state.currentPiece) {
@@ -30,7 +33,7 @@ const useGameState = () => {
 
       return () => clearInterval(interval);
     }
-  }, [state.currentPiece, state.gameStatus, state.level, enhancedDispatch]);
+  }, [state?.currentPiece, state?.gameStatus, state?.level, enhancedDispatch]);
 
   const handleKeyPress = useCallback(
     (e: KeyboardEvent) => {

@@ -13,6 +13,7 @@ type Piece = {
 };
 
 type GameState = {
+  version: string;
   grid: Grid;
   currentPiece: Piece | null;
   nextPiece: Piece | null;

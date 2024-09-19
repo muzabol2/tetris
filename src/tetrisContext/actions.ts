@@ -1,3 +1,5 @@
+"use client";
+
 import type { Piece } from "../types/gamePiece";
 import type { TetrisAction as A } from "@/enums";
 
