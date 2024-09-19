@@ -1,53 +1,21 @@
 "use client";
 
-import { PieceGrid } from "../common";
+import { useHelpers } from "./helpers";
+import { PieceGrid } from "@/components/common";
 import { SHAPES } from "@/constants";
-import { useColorContext } from "@/context";
-import { useFeedbackMsg } from "@/hooks";
-import { getDefaultColors } from "@/utils";
-import { useEffect, useState } from "react";
 
 type ShapeKey = "I" | "J" | "L" | "O" | "S" | "T" | "Z";
 
 export const ColorPicker = () => {
-  const { colors, setColors } = useColorContext();
-  const [selectedShape, setSelectedShape] = useState<ShapeKey | null>(null);
-  const [tempColors, setTempColors] = useState<Record<ShapeKey, string>>(getDefaultColors);
-  const [feedbackMessage, showMessage] = useFeedbackMsg();
-
-  useEffect(() => {
-    setTempColors(colors as Record<ShapeKey, string>);
-  }, [colors]);
-
-  const handleColorChange = (shape: ShapeKey, color: string) => {
-    setTempColors((prevColors) => ({
-      ...prevColors,
-      [shape]: color,
-    }));
-  };
-
-  const handleBlockClick = (shape: ShapeKey) => {
-    setSelectedShape(shape);
-  };
-
-  const applyColors = () => {
-    setColors(tempColors);
-    showMessage("Colors applied");
-  };
-
-  const resetToDefault = () => {
-    const defaultColors = Object.keys(SHAPES).reduce(
-      (acc, key) => {
-        acc[key as ShapeKey] = SHAPES[key as ShapeKey].color;
-
-        return acc;
-      },
-      {} as Record<ShapeKey, string>
-    );
-
-    setTempColors(defaultColors);
-    showMessage("Colors reset to default.");
-  };
+  const {
+    selectedShape,
+    tempColors,
+    feedbackMessage,
+    handleColorChange,
+    handleBlockClick,
+    applyColors,
+    resetToDefault,
+  } = useHelpers();
 
   return (
     <div className="flex flex-col gap-4">
@@ -84,6 +52,7 @@ export const ColorPicker = () => {
           Apply
         </button>
       </div>
+
       {feedbackMessage && (
         <div className="mt-4 p-2 bg-green-100 text-green-700 border border-green-200 rounded">{feedbackMessage}</div>
       )}

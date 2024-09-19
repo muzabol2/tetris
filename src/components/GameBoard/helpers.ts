@@ -1,10 +1,20 @@
 "use client";
 
 import { BLOCK_SIZE, COLS, ROWS } from "@/constants";
+import { TetrisAction as A } from "@/enums";
+import { useTetris } from "@/tetrisContext";
 import { useEffect, useState } from "react";
 
-const useBlockSize = () => {
+const useHelpers = () => {
   const [blockSize, setBlockSize] = useState<number>(BLOCK_SIZE);
+  const {
+    state: { grid, currentPiece, gameStatus },
+    dispatch,
+  } = useTetris();
+
+  const rotatePiece = () => {
+    dispatch({ type: A.ROTATE_PIECE });
+  };
 
   useEffect(() => {
     const calculateBlockSize = () => {
@@ -23,7 +33,7 @@ const useBlockSize = () => {
     return () => window.removeEventListener("resize", calculateBlockSize);
   }, []);
 
-  return blockSize;
+  return { grid, currentPiece, gameStatus, rotatePiece, blockSize };
 };
 
-export { useBlockSize };
+export { useHelpers };

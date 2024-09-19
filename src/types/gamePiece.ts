@@ -20,6 +20,7 @@ type GameState = {
   level: number;
   score: number;
   highScore: number;
+  colors: Record<string, string>;
 };
 
 export type { GameState, Grid, Piece };

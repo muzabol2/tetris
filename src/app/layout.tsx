@@ -1,6 +1,6 @@
 import { Navbar } from "@/components";
-import { ColorProvider } from "@/context";
 import "@/styles/globals.css";
+import { TetrisProvider } from "@/tetrisContext";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 
@@ -21,12 +21,12 @@ const RootLayout = ({ children }: Readonly<Props>) => (
       style={{ minHeight: "var(--vh)", height: "var(--vh)" }}
     >
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <ColorProvider>
+        <TetrisProvider>
           <Navbar />
           <main className="mx-auto mb-0 mt-16 flex w-full max-w-7xl flex-1 flex-col items-center justify-center px-6 lg:px-12">
             {children}
           </main>
-        </ColorProvider>
+        </TetrisProvider>
       </ThemeProvider>
     </body>
   </html>

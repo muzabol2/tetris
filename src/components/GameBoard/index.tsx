@@ -1,17 +1,12 @@
 "use client";
 
-import { Block, PieceGrid } from "../common";
+import { useHelpers } from "./helpers";
+import { Block, PieceGrid } from "@/components/common";
 import { COLS, ROWS } from "@/constants";
 import { GameStatus } from "@/enums";
-import { useBlockSize } from "@/hooks";
-import type { GameState } from "@/types";
 
-type Props = GameState & {
-  rotatePiece: () => void;
-};
-
-const GameBoard = ({ grid, currentPiece, gameStatus, rotatePiece }: Props) => {
-  const blockSize = useBlockSize();
+const GameBoard = () => {
+  const { grid, currentPiece, gameStatus, rotatePiece, blockSize } = useHelpers();
 
   return (
     <div
