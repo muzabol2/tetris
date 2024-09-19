@@ -1,6 +1,8 @@
+"use client";
+
 import { useState } from "react";
 
-const useLocalStorage = <T>(key: string, initialValue: T) => {
+const useLocalStorage = <T>(initialValue: T, key: string, version: string) => {
   const [storedValue, setStoredValue] = useState<T>(() => {
     if (typeof window === "undefined") {
       return initialValue;
@@ -8,7 +10,13 @@ const useLocalStorage = <T>(key: string, initialValue: T) => {
     try {
       const item = window.localStorage.getItem(key);
 
-      return item ? JSON.parse(item) : initialValue;
+      if (item) {
+        const parsedItem = JSON.parse(item);
+
+        return parsedItem.version === version ? parsedItem : initialValue;
+      }
+
+      return initialValue;
     } catch (error) {
       console.error(error);
 

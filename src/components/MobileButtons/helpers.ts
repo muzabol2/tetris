@@ -1,3 +1,5 @@
+"use client";
+
 import { TetrisAction as A } from "@/enums";
 import { useTetris } from "@/tetrisContext";
 import { useEffect, useState } from "react";

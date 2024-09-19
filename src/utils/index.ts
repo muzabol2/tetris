@@ -1,6 +1,6 @@
 "use client";
 
-import { COLS, LINES_PER_LEVEL, ROWS, SCORE_INCREMENT, SHAPES } from "@/constants";
+import { COLS, GAME_VERSION, LINES_PER_LEVEL, ROWS, SCORE_INCREMENT, SHAPES } from "@/constants";
 import { GameStatus } from "@/enums";
 import type { GameState, Grid, Piece } from "@/types";
 
@@ -21,6 +21,7 @@ const createEmptyGrid = (): Grid => Array.from({ length: ROWS }, createEmptyRow)
 const calculateSpeed = (level: number) => Math.max(1000 - level * 100, 100);
 
 const initialState: GameState = {
+  version: GAME_VERSION,
   grid: createEmptyGrid(),
   currentPiece: null,
   nextPiece: null,
