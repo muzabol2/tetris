@@ -5,7 +5,7 @@ import { createNewGameState, getRandomPiece, handleLineClearing, isCollision } f
 const tetrisReducer = (state: GameState, action: GameActions): GameState => {
   switch (action.type) {
     case A.NEW_GAME:
-      return createNewGameState(state.colors);
+      return createNewGameState(state.colors, state.highScore);
 
     case A.TOGGLE_PAUSE_RESUME:
       return {
@@ -86,6 +86,7 @@ const tetrisReducer = (state: GameState, action: GameActions): GameState => {
             score: newScore,
             level: newLevel,
             gameStatus: S.GAME_OVER,
+            highScore: Math.max(state.highScore, newScore),
           };
         }
 

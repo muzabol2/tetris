@@ -22,11 +22,13 @@ const initialState: GameState = {
   colors: getDefaultColors(),
 };
 
-const createNewGameState = (colors: Record<string, string>): GameState => ({
+const createNewGameState = (colors: Record<string, string>, highScore: number): GameState => ({
   ...initialState,
   currentPiece: getRandomPiece(colors),
   nextPiece: getRandomPiece(colors),
   gameStatus: GameStatus.RUNNING,
+  highScore,
+  colors,
 });
 
 const getRandomPiece = (colors: Record<string, string>): Piece => {
