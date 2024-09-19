@@ -1,3 +1,5 @@
+"use client";
+
 import { SHAPES } from "@/constants";
 import { TetrisAction as A } from "@/enums";
 import { useTetris } from "@/tetrisContext";
