@@ -11,7 +11,7 @@ import { useCallback, useEffect, useReducer, useState } from "react";
 
 const useGameState = () => {
   const [localState, setLocalState] = useLocalStorage<GameState>(initialState, GAME_STATE_KEY, GAME_VERSION);
-  const [state, dispatch] = useReducer(reducer, localState);
+  const [state, dispatch] = useReducer(reducer, localState || initialState);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const useGameState = () => {
 
   useEffect(() => {
     setLocalState(state);
-  }, [state.currentPiece, state.colors]);
+  }, [state?.currentPiece, state?.colors]);
 
   useEffect(() => {
     if (state.gameStatus === S.RUNNING && state.currentPiece) {
@@ -33,11 +33,11 @@ const useGameState = () => {
 
       return () => clearInterval(interval);
     }
-  }, [state.currentPiece, state.gameStatus, state.level, enhancedDispatch]);
+  }, [state?.currentPiece, state?.colors]);
 
   const handleKeyPress = useCallback(
     (e: KeyboardEvent) => {
-      if (!state.currentPiece || state.gameStatus !== S.RUNNING) {
+      if (!state?.currentPiece || state?.gameStatus !== S.RUNNING) {
         return;
       }
 
@@ -59,7 +59,7 @@ const useGameState = () => {
           break;
       }
     },
-    [state.currentPiece, state.gameStatus, enhancedDispatch]
+    [state?.currentPiece, state?.gameStatus]
   );
 
   useEffect(() => {
