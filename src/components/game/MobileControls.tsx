@@ -1,26 +1,9 @@
 "use client";
 
-import { useTetrisContext } from "@/context";
-import { TetrisAction as A } from "@/enums";
+import { useMobileControls } from "@/hooks";
 
 const MobileControls = () => {
-  const { dispatch } = useTetrisContext();
-
-  const movePiece = (dx: number, dy: number = 0) => {
-    dispatch({ type: A.MOVE_PIECE, payload: { dx, dy } });
-  };
-
-  const movePieceDown = () => {
-    dispatch({ type: A.MOVE_PIECE_DOWN });
-  };
-
-  const hardDrop = () => {
-    dispatch({ type: A.HARD_DROP });
-  };
-
-  const rotatePiece = () => {
-    dispatch({ type: A.ROTATE_PIECE });
-  };
+  const { movePieceDown, hardDrop, rotatePiece, movePiece } = useMobileControls();
 
   return (
     <div className="flex items-center justify-between py-1 space-x-2">
