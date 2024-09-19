@@ -1,8 +1,22 @@
 import { useTetrisContext } from "@/context";
 import { TetrisAction as A } from "@/enums";
+import { useEffect, useState } from "react";
 
 const useHelpers = () => {
   const { dispatch } = useTetrisContext();
+
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const movePieceDown = () => {
     dispatch({ type: A.MOVE_PIECE_DOWN });
@@ -20,7 +34,7 @@ const useHelpers = () => {
     dispatch({ type: A.MOVE_PIECE, payload: { dx: direction, dy: 0 } });
   };
 
-  return { movePieceDown, hardDrop, rotatePiece, movePiece };
+  return { isMobile, movePieceDown, hardDrop, rotatePiece, movePiece };
 };
 
 export { useHelpers };

@@ -1,9 +1,13 @@
 "use client";
 
-import { useHelpers } from "./useHelpers";
+import { useHelpers } from "./helpers";
 
 const MobileButtons = () => {
-  const { movePieceDown, hardDrop, rotatePiece, movePiece } = useHelpers();
+  const { isMobile, movePieceDown, hardDrop, rotatePiece, movePiece } = useHelpers();
+
+  if (!isMobile) {
+    return null;
+  }
 
   return (
     <div className="flex items-center justify-between py-1 space-x-2">
