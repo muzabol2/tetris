@@ -9,6 +9,7 @@ import {
   isCollision,
   movePiece,
   rotatePiece,
+  updateGridWithPiece,
 } from "@/utils";
 
 const reducer = (state: GameState, action: Actions): GameState => {
@@ -26,11 +27,11 @@ const reducer = (state: GameState, action: Actions): GameState => {
       const { dx, dy } = action.payload;
       const newPiece = movePiece(state.currentPiece!, dx, dy);
 
-      if (!isCollision(newPiece, state.grid)) {
-        return { ...state, currentPiece: newPiece };
+      if (isCollision(newPiece, state.grid)) {
+        return state;
       }
 
-      return state;
+      return { ...state, currentPiece: newPiece };
     }
 
     case A.MOVE_PIECE_DOWN: {
@@ -58,41 +59,26 @@ const reducer = (state: GameState, action: Actions): GameState => {
         return { ...state, currentPiece: newPiece };
       }
 
-      const newGrid = state.grid.map((row) => row.slice());
-
-      state.currentPiece!.shape.forEach((row, y) =>
-        row.forEach((value, x) => {
-          if (value) {
-            newGrid[state.currentPiece!.y + y][state.currentPiece!.x + x] = {
-              filled: true,
-              color: state.currentPiece!.color,
-            };
-          }
-        })
-      );
-
+      const newGrid = updateGridWithPiece(state.grid, state.currentPiece!);
       const { updatedGrid, newScore, newLevel } = handleLineClearing(newGrid, state.score, state.level);
-
       const nextPiece = getRandomPiece(state.colors);
-
-      if (isCollision(nextPiece, updatedGrid)) {
-        return {
-          ...state,
-          grid: updatedGrid,
-          score: newScore,
-          level: newLevel,
-          gameStatus: S.GAME_OVER,
-          highScore: Math.max(state.highScore, newScore),
-        };
-      }
+      const isGameOver = isCollision(nextPiece, updatedGrid);
 
       return {
         ...state,
         grid: updatedGrid,
         score: newScore,
         level: newLevel,
-        currentPiece: state.nextPiece,
-        nextPiece,
+
+        ...(!isGameOver && {
+          currentPiece: state.nextPiece,
+          nextPiece,
+        }),
+
+        ...(isGameOver && {
+          gameStatus: S.GAME_OVER,
+          highScore: Math.max(state.highScore, newScore),
+        }),
       };
     }
 

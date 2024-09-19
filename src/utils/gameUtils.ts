@@ -1,9 +1,18 @@
 "use client";
 
-import { getDefaultColors } from "./getDefaultColors";
 import { COLS, LINES_PER_LEVEL, ROWS, SCORE_INCREMENT, SHAPES } from "@/constants";
 import { GameStatus } from "@/enums";
 import type { GameState, Grid, Piece } from "@/types";
+
+const getDefaultColors = () =>
+  Object.keys(SHAPES).reduce(
+    (acc, key) => {
+      acc[key] = SHAPES[key].color;
+
+      return acc;
+    },
+    {} as Record<string, string>
+  );
 
 const createEmptyRow = () => Array.from({ length: COLS }, () => ({ filled: false, color: "transparent" }));
 
@@ -68,6 +77,23 @@ const isCollision = (piece: Piece | null, grid: Grid): boolean => {
   return false;
 };
 
+const updateGridWithPiece = (grid: Grid, piece: Piece): Grid => {
+  const newGrid = grid.map((row) => row.slice());
+
+  piece.shape.forEach((row, y) =>
+    row.forEach((value, x) => {
+      if (value) {
+        newGrid[piece.y + y][piece.x + x] = {
+          filled: true,
+          color: piece.color,
+        };
+      }
+    })
+  );
+
+  return newGrid;
+};
+
 const handleLineClearing = (grid: Grid, score: number, level: number) => {
   const updatedGrid = grid.filter((row) => row.some((cell) => !cell.filled));
   const linesCleared = ROWS - updatedGrid.length;
@@ -119,6 +145,7 @@ const hardDropPiece = (piece: Piece, grid: Grid): Piece => {
 export {
   calculateSpeed,
   createNewGameState,
+  getDefaultColors,
   getRandomPiece,
   handleLineClearing,
   hardDropPiece,
@@ -126,4 +153,5 @@ export {
   isCollision,
   movePiece,
   rotatePiece,
+  updateGridWithPiece,
 };
