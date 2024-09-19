@@ -15,6 +15,8 @@ const useLocalStorage = <T>(initialValue: T, key: string, version: string) => {
 
         return parsedItem.version === version ? parsedItem : initialValue;
       }
+
+      return initialValue;
     } catch (error) {
       console.error(error);
 

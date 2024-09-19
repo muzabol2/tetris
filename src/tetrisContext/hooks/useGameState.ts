@@ -24,7 +24,7 @@ const useGameState = () => {
 
   useEffect(() => {
     setLocalState(state);
-  }, [state?.currentPiece, state?.colors]);
+  }, [state.currentPiece, state.colors]);
 
   useEffect(() => {
     if (state.gameStatus === S.RUNNING && state.currentPiece) {
@@ -33,7 +33,7 @@ const useGameState = () => {
 
       return () => clearInterval(interval);
     }
-  }, [state?.currentPiece, state?.gameStatus, state?.level, enhancedDispatch]);
+  }, [state.currentPiece, state.gameStatus, state.level, enhancedDispatch]);
 
   const handleKeyPress = useCallback(
     (e: KeyboardEvent) => {
