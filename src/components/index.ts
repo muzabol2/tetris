@@ -1,2 +1,4 @@
-export * from "./game";
-export * from "./ui/Navbar";
+export { GameBoard } from "./GameBoard";
+export { GameMenu } from "./GameMenu";
+export { MobileButtons } from "./MobileButtons";
+export { Navbar } from "./Navbar";

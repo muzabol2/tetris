@@ -1,19 +1,10 @@
 "use client";
 
+import { useHelpers } from "./helpers";
 import { MoonIcon, SunIcon } from "@/icons";
-import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
 
 const ThemeSwitcher = () => {
-  const [mounted, setMounted] = useState(false);
-  const { setTheme, resolvedTheme } = useTheme();
-  const isActive = resolvedTheme === "dark";
-
-  const toggleColorMode = () => {
-    setTheme(resolvedTheme === "light" ? "dark" : "light");
-  };
-
-  useEffect(() => setMounted(true), []);
+  const { isActive, mounted, toggleColorMode } = useHelpers();
 
   if (!mounted) {
     return null;

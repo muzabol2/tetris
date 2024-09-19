@@ -1,7 +1,7 @@
 import { useTetrisContext } from "@/context";
 import { TetrisAction as A } from "@/enums";
 
-const useMobileControls = () => {
+const useHelpers = () => {
   const { dispatch } = useTetrisContext();
 
   const movePieceDown = () => {
@@ -23,4 +23,4 @@ const useMobileControls = () => {
   return { movePieceDown, hardDrop, rotatePiece, movePiece };
 };
 
-export { useMobileControls };
+export { useHelpers };

@@ -1,6 +1,6 @@
+import { useLocalStorage } from "./useLocalStorage";
 import { GAME_STATE_KEY } from "@/constants";
 import { TetrisAction as A, GameStatus as S } from "@/enums";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { tetrisReducer } from "@/reducers";
 import type { GameActions, GameState } from "@/types";
 import { calculateSpeed, initialState } from "@/utils";

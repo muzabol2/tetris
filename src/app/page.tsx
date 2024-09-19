@@ -1,6 +1,6 @@
 "use client";
 
-import { GameBoard, GameMenu, MobileControls } from "@/components";
+import { GameBoard, GameMenu, MobileButtons } from "@/components";
 import { useIsMobile } from "@/hooks";
 
 const Home = () => {
@@ -13,7 +13,7 @@ const Home = () => {
         <GameMenu />
       </div>
 
-      {isMobile && <MobileControls />}
+      {isMobile && <MobileButtons />}
     </div>
   );
 };

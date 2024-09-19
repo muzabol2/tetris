@@ -1,21 +1,12 @@
 "use client";
 
-import { PauseResumeButton, PieceGrid, Section } from "../common";
-import { useTetrisContext } from "@/context";
-import { TetrisAction as A } from "@/enums";
+import { PauseResumeButton } from "./PauseResumeButton";
+import { Section } from "./Section";
+import { useHelpers } from "./helpers";
+import { PieceGrid } from "@/components/common";
 
 const GameMenu = () => {
-  const { state, dispatch } = useTetrisContext();
-
-  const newGame = () => {
-    dispatch({ type: A.NEW_GAME });
-    (document.activeElement as HTMLElement)?.blur();
-  };
-
-  const togglePauseResume = () => {
-    dispatch({ type: A.TOGGLE_PAUSE_RESUME });
-    (document.activeElement as HTMLElement)?.blur();
-  };
+  const { state, newGame, togglePauseResume } = useHelpers();
 
   return (
     <div className="flex flex-col items-center gap-2">

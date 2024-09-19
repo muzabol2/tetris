@@ -1,9 +1,9 @@
 "use client";
 
-import { useMobileControls } from "@/hooks";
+import { useHelpers } from "./useHelpers";
 
-const MobileControls = () => {
-  const { movePieceDown, hardDrop, rotatePiece, movePiece } = useMobileControls();
+const MobileButtons = () => {
+  const { movePieceDown, hardDrop, rotatePiece, movePiece } = useHelpers();
 
   return (
     <div className="flex items-center justify-between py-1 space-x-2">
@@ -26,4 +26,4 @@ const MobileControls = () => {
   );
 };
 
-export { MobileControls };
+export { MobileButtons };

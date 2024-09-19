@@ -1,21 +1,12 @@
 "use client";
 
-import { Block, PieceGrid } from "../common";
+import { useHelpers } from "./helpers";
+import { Block, PieceGrid } from "@/components/common";
 import { COLS, ROWS } from "@/constants";
-import { useTetrisContext } from "@/context";
-import { TetrisAction as A, GameStatus } from "@/enums";
-import { useBlockSize } from "@/hooks";
+import { GameStatus } from "@/enums";
 
 const GameBoard = () => {
-  const blockSize = useBlockSize();
-  const {
-    state: { grid, currentPiece, gameStatus },
-    dispatch,
-  } = useTetrisContext();
-
-  const rotatePiece = () => {
-    dispatch({ type: A.ROTATE_PIECE });
-  };
+  const { grid, currentPiece, gameStatus, rotatePiece, blockSize } = useHelpers();
 
   return (
     <div
