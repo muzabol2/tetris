@@ -1,7 +1,15 @@
 import type { Actions } from "./actions";
 import { TetrisAction as A, GameStatus as S } from "@/enums";
 import type { GameState } from "@/types";
-import { createNewGameState, getRandomPiece, handleLineClearing, isCollision } from "@/utils";
+import {
+  createNewGameState,
+  getRandomPiece,
+  handleLineClearing,
+  hardDropPiece,
+  isCollision,
+  movePiece,
+  rotatePiece,
+} from "@/utils";
 
 const reducer = (state: GameState, action: Actions): GameState => {
   switch (action.type) {
@@ -16,11 +24,7 @@ const reducer = (state: GameState, action: Actions): GameState => {
 
     case A.MOVE_PIECE: {
       const { dx, dy } = action.payload;
-      const newPiece = {
-        ...state.currentPiece!,
-        x: state.currentPiece!.x + dx,
-        y: state.currentPiece!.y + dy,
-      };
+      const newPiece = movePiece(state.currentPiece!, dx, dy);
 
       if (!isCollision(newPiece, state.grid)) {
         return { ...state, currentPiece: newPiece };
@@ -30,29 +34,19 @@ const reducer = (state: GameState, action: Actions): GameState => {
     }
 
     case A.MOVE_PIECE_DOWN: {
-      const newPiece = {
-        ...state.currentPiece!,
-        y: state.currentPiece!.y + 1,
-      };
+      const newPiece = movePiece(state.currentPiece!, 0, 1);
 
       return reducer(state, { type: A.HANDLE_PIECE_MOVEMENT, payload: { newPiece } });
     }
 
     case A.HARD_DROP: {
-      const hardDropPiece = { ...state.currentPiece! };
+      const droppedPiece = hardDropPiece(state.currentPiece!, state.grid);
 
-      while (!isCollision({ ...hardDropPiece, y: hardDropPiece.y + 1 }, state.grid)) {
-        hardDropPiece.y += 1;
-      }
-
-      return reducer(state, { type: A.HANDLE_PIECE_MOVEMENT, payload: { newPiece: hardDropPiece } });
+      return reducer(state, { type: A.HANDLE_PIECE_MOVEMENT, payload: { newPiece: droppedPiece } });
     }
 
     case A.ROTATE_PIECE: {
-      const rotatedShape = state
-        .currentPiece!.shape[0].map((_, i) => state.currentPiece!.shape.map((row) => row[i]))
-        .reverse();
-      const rotatedPiece = { ...state.currentPiece!, shape: rotatedShape };
+      const rotatedPiece = rotatePiece(state.currentPiece!);
 
       return reducer(state, { type: A.HANDLE_PIECE_MOVEMENT, payload: { newPiece: rotatedPiece } });
     }
@@ -62,52 +56,45 @@ const reducer = (state: GameState, action: Actions): GameState => {
 
       if (!isCollision(newPiece, state.grid)) {
         return { ...state, currentPiece: newPiece };
-      } else {
-        const newGrid = state.grid.map((row) => row.slice());
+      }
 
-        state.currentPiece!.shape.forEach((row, y) =>
-          row.forEach((value, x) => {
-            if (value) {
-              newGrid[state.currentPiece!.y + y][state.currentPiece!.x + x] = {
-                filled: true,
-                color: state.currentPiece!.color,
-              };
-            }
-          })
-        );
+      const newGrid = state.grid.map((row) => row.slice());
 
-        const { updatedGrid, newScore, newLevel } = handleLineClearing(newGrid, state.score, state.level);
+      state.currentPiece!.shape.forEach((row, y) =>
+        row.forEach((value, x) => {
+          if (value) {
+            newGrid[state.currentPiece!.y + y][state.currentPiece!.x + x] = {
+              filled: true,
+              color: state.currentPiece!.color,
+            };
+          }
+        })
+      );
 
-        const nextPiece = getRandomPiece(state.colors);
+      const { updatedGrid, newScore, newLevel } = handleLineClearing(newGrid, state.score, state.level);
 
-        if (isCollision(nextPiece, updatedGrid)) {
-          return {
-            ...state,
-            grid: updatedGrid,
-            score: newScore,
-            level: newLevel,
-            gameStatus: S.GAME_OVER,
-            highScore: Math.max(state.highScore, newScore),
-          };
-        }
+      const nextPiece = getRandomPiece(state.colors);
 
+      if (isCollision(nextPiece, updatedGrid)) {
         return {
           ...state,
           grid: updatedGrid,
           score: newScore,
           level: newLevel,
-          currentPiece: state.nextPiece,
-          nextPiece,
+          gameStatus: S.GAME_OVER,
+          highScore: Math.max(state.highScore, newScore),
         };
       }
-    }
 
-    case A.SPAWN_NEXT_PIECE:
       return {
         ...state,
+        grid: updatedGrid,
+        score: newScore,
+        level: newLevel,
         currentPiece: state.nextPiece,
-        nextPiece: getRandomPiece(state.colors),
+        nextPiece,
       };
+    }
 
     case A.SET_COLORS:
       return {

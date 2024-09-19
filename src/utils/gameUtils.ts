@@ -91,4 +91,39 @@ const handleLineClearing = (grid: Grid, score: number, level: number) => {
   };
 };
 
-export { calculateSpeed, createNewGameState, getRandomPiece, handleLineClearing, initialState, isCollision };
+const movePiece = (piece: Piece, dx: number, dy: number): Piece => ({
+  ...piece,
+  x: piece.x + dx,
+  y: piece.y + dy,
+});
+
+const rotatePiece = (piece: Piece): Piece => {
+  const rotatedShape = piece.shape[0].map((_, i) => piece.shape.map((row) => row[i])).reverse();
+
+  return {
+    ...piece,
+    shape: rotatedShape,
+  };
+};
+
+const hardDropPiece = (piece: Piece, grid: Grid): Piece => {
+  const droppedPiece = { ...piece };
+
+  while (!isCollision({ ...droppedPiece, y: droppedPiece.y + 1 }, grid)) {
+    droppedPiece.y += 1;
+  }
+
+  return droppedPiece;
+};
+
+export {
+  calculateSpeed,
+  createNewGameState,
+  getRandomPiece,
+  handleLineClearing,
+  hardDropPiece,
+  initialState,
+  isCollision,
+  movePiece,
+  rotatePiece,
+};
