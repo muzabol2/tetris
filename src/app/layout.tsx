@@ -1,6 +1,6 @@
 import { Navbar } from "@/components";
-import { TetrisProvider } from "@/context";
 import "@/styles/globals.css";
+import { TetrisProvider } from "@/tetrisContext";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 

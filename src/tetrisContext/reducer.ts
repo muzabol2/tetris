@@ -1,8 +1,9 @@
+import type { Actions } from "./actions";
 import { TetrisAction as A, GameStatus as S } from "@/enums";
-import type { GameActions, GameState } from "@/types";
+import type { GameState } from "@/types";
 import { createNewGameState, getRandomPiece, handleLineClearing, isCollision } from "@/utils";
 
-const tetrisReducer = (state: GameState, action: GameActions): GameState => {
+const reducer = (state: GameState, action: Actions): GameState => {
   switch (action.type) {
     case A.NEW_GAME:
       return createNewGameState(state.colors, state.highScore);
@@ -34,7 +35,7 @@ const tetrisReducer = (state: GameState, action: GameActions): GameState => {
         y: state.currentPiece!.y + 1,
       };
 
-      return tetrisReducer(state, { type: A.HANDLE_PIECE_MOVEMENT, payload: { newPiece } });
+      return reducer(state, { type: A.HANDLE_PIECE_MOVEMENT, payload: { newPiece } });
     }
 
     case A.HARD_DROP: {
@@ -44,7 +45,7 @@ const tetrisReducer = (state: GameState, action: GameActions): GameState => {
         hardDropPiece.y += 1;
       }
 
-      return tetrisReducer(state, { type: A.HANDLE_PIECE_MOVEMENT, payload: { newPiece: hardDropPiece } });
+      return reducer(state, { type: A.HANDLE_PIECE_MOVEMENT, payload: { newPiece: hardDropPiece } });
     }
 
     case A.ROTATE_PIECE: {
@@ -53,7 +54,7 @@ const tetrisReducer = (state: GameState, action: GameActions): GameState => {
         .reverse();
       const rotatedPiece = { ...state.currentPiece!, shape: rotatedShape };
 
-      return tetrisReducer(state, { type: A.HANDLE_PIECE_MOVEMENT, payload: { newPiece: rotatedPiece } });
+      return reducer(state, { type: A.HANDLE_PIECE_MOVEMENT, payload: { newPiece: rotatedPiece } });
     }
 
     case A.HANDLE_PIECE_MOVEMENT: {
@@ -119,4 +120,4 @@ const tetrisReducer = (state: GameState, action: GameActions): GameState => {
   }
 };
 
-export { tetrisReducer };
+export { reducer };

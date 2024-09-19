@@ -1,7 +1,7 @@
-import type { Piece } from "./gamePiece";
+import type { Piece } from "../types/gamePiece";
 import type { TetrisAction as A } from "@/enums";
 
-type GameActions =
+type Actions =
   | { type: A.NEW_GAME }
   | { type: A.TOGGLE_PAUSE_RESUME }
   | { type: A.MOVE_PIECE; payload: { dx: number; dy: number } }
@@ -13,4 +13,4 @@ type GameActions =
   | { type: A.SPAWN_NEXT_PIECE }
   | { type: A.SET_COLORS; payload: { colors: Record<string, string> } };
 
-export type { GameActions };
+export type { Actions };

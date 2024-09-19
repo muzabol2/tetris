@@ -1,9 +1,9 @@
-import { useTetrisContext } from "@/context";
 import { TetrisAction as A } from "@/enums";
+import { useTetris } from "@/tetrisContext";
 import { useEffect, useState } from "react";
 
 const useHelpers = () => {
-  const { dispatch } = useTetrisContext();
+  const { dispatch } = useTetris();
 
   const [isMobile, setIsMobile] = useState<boolean>(false);
 

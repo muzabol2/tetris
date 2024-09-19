@@ -1,13 +1,13 @@
 import { SHAPES } from "@/constants";
-import { useTetrisContext } from "@/context";
 import { TetrisAction as A } from "@/enums";
+import { useTetris } from "@/tetrisContext";
 import { getDefaultColors } from "@/utils";
 import { useEffect, useState } from "react";
 
 type ShapeKey = "I" | "J" | "L" | "O" | "S" | "T" | "Z";
 
 const useHelpers = () => {
-  const { state, dispatch } = useTetrisContext();
+  const { state, dispatch } = useTetris();
   const [selectedShape, setSelectedShape] = useState<ShapeKey | null>(null);
   const [tempColors, setTempColors] = useState<Record<ShapeKey, string>>(getDefaultColors);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);

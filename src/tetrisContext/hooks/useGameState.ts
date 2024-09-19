@@ -1,21 +1,21 @@
+import type { Actions } from "../actions";
+import { reducer } from "../reducer";
 import { useLocalStorage } from "./useLocalStorage";
-import { GAME_STATE_KEY } from "@/constants";
 import { TetrisAction as A, GameStatus as S } from "@/enums";
-import { tetrisReducer } from "@/reducers";
-import type { GameActions, GameState } from "@/types";
+import type { GameState } from "@/types";
 import { calculateSpeed, initialState } from "@/utils";
 import { useCallback, useEffect, useReducer, useState } from "react";
 
 const useGameState = () => {
-  const [localState, setLocalState] = useLocalStorage<GameState>(GAME_STATE_KEY, initialState);
-  const [state, dispatch] = useReducer(tetrisReducer, localState);
+  const [localState, setLocalState] = useLocalStorage<GameState>("game_state", initialState);
+  const [state, dispatch] = useReducer(reducer, localState);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  const enhancedDispatch = useCallback((action: GameActions) => {
+  const enhancedDispatch = useCallback((action: Actions) => {
     dispatch(action);
   }, []);
 
