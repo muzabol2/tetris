@@ -4,7 +4,9 @@ import { useState } from "react";
 
 const useLocalStorage = <T>(initialValue: T, key: string, version: string) => {
   const [storedValue, setStoredValue] = useState<T>(() => {
-    if (typeof window === "undefined") {
+    if (typeof window === "undefined" || !window.localStorage) {
+      console.warn("localStorage is not available");
+
       return initialValue;
     }
     try {
@@ -18,7 +20,7 @@ const useLocalStorage = <T>(initialValue: T, key: string, version: string) => {
 
       return initialValue;
     } catch (error) {
-      console.error(error);
+      console.error("Error accessing localStorage:", error);
 
       return initialValue;
     }
@@ -29,11 +31,11 @@ const useLocalStorage = <T>(initialValue: T, key: string, version: string) => {
       const valueToStore = value instanceof Function ? value(storedValue) : value;
 
       setStoredValue(valueToStore);
-      if (typeof window !== "undefined") {
+      if (typeof window !== "undefined" && window.localStorage) {
         window.localStorage.setItem(key, JSON.stringify(valueToStore));
       }
     } catch (error) {
-      console.error(error);
+      console.error("Error setting localStorage:", error);
     }
   };
 
