@@ -3,15 +3,15 @@
 import type { Actions } from "../actions";
 import { reducer } from "../reducer";
 import { useLocalStorage } from "./useLocalStorage";
-import { GAME_STATE_KEY, GAME_VERSION } from "@/constants";
+import { GAME_STATE_KEY } from "@/constants";
 import { TetrisAction as A, GameStatus as S } from "@/enums";
 import type { GameState } from "@/types";
 import { calculateSpeed, initialState } from "@/utils";
 import { useCallback, useEffect, useReducer, useState } from "react";
 
 const useGameState = () => {
-  const [localState, setLocalState] = useLocalStorage<GameState>(initialState, GAME_STATE_KEY, GAME_VERSION);
-  const [state, dispatch] = useReducer(reducer, localState || initialState);
+  const [localState, setLocalState] = useLocalStorage<GameState>(initialState, GAME_STATE_KEY);
+  const [state, dispatch] = useReducer(reducer, localState ?? initialState);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -24,11 +24,11 @@ const useGameState = () => {
 
   useEffect(() => {
     setLocalState(state);
-  }, [state?.currentPiece, state?.colors]);
+  }, [state?.nextPiece, state?.colors]);
 
   useEffect(() => {
-    if (state.gameStatus === S.RUNNING && state.currentPiece) {
-      const speed = calculateSpeed(state.level);
+    if (state?.gameStatus === S.RUNNING && state?.currentPiece) {
+      const speed = calculateSpeed(state?.level ?? 1);
       const interval = setInterval(() => enhancedDispatch({ type: A.MOVE_PIECE_DOWN }), speed);
 
       return () => clearInterval(interval);

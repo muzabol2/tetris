@@ -18,7 +18,7 @@ const createEmptyRow = () => Array.from({ length: COLS }, () => ({ filled: false
 
 const createEmptyGrid = (): Grid => Array.from({ length: ROWS }, createEmptyRow);
 
-const calculateSpeed = (level: number) => Math.max(1000 - level * 100, 100);
+const calculateSpeed = (level: number): number => Math.max(1000 - level * 100, 100);
 
 const initialState: GameState = {
   version: GAME_VERSION,
