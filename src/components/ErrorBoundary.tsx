@@ -1,5 +1,6 @@
 "use client";
 
+import { GAME_VERSION } from "@/constants";
 import React from "react";
 import { ErrorBoundary as ReactErrorBoundary } from "react-error-boundary";
 
@@ -19,6 +20,7 @@ const ErrorFallback = ({ error, resetErrorBoundary }: Props) => (
     >
       Try again
     </button>
+    <p className="mt-4 text-sm text-gray-500">App Version: {GAME_VERSION}</p>
   </div>
 );
 

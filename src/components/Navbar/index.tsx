@@ -3,7 +3,7 @@
 import { Popover, PopoverContent, PopoverTrigger } from "../common";
 import { ColorPicker } from "./ColorPicker";
 import { ThemeSwitcher } from "./ThemeSwitcher";
-import { URLS } from "@/constants";
+import { GAME_VERSION, URLS } from "@/constants";
 import { BrushIcon, BuyMeACoffeeIcon, GithubIcon, LogoIcon } from "@/icons";
 
 const Navbar = () => (
@@ -15,6 +15,7 @@ const Navbar = () => (
       >
         <LogoIcon />
         tetris
+        <span className="text-sm font-normal text-gray-500">v{GAME_VERSION}</span>
       </h1>
       <div className="flex items-center gap-4">
         <Popover>
