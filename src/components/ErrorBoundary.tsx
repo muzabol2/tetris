@@ -7,6 +7,7 @@ type Props = {
   error: Error;
   resetErrorBoundary: () => void;
 };
+
 const ErrorFallback = ({ error, resetErrorBoundary }: Props) => (
   <div role="alert" className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-gray-800 p-6">
     <h1 className="text-3xl font-semibold mb-4">Something went wrong</h1>

@@ -15,21 +15,21 @@ const RootLayout = ({
   children: React.ReactNode;
 }>) => (
   <html lang="en" suppressHydrationWarning>
-    <body
-      className="flex flex-col bg-background text-foreground transition-colors duration-200"
-      style={{ minHeight: "var(--vh)", height: "var(--vh)" }}
-    >
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <TetrisProvider>
-          <ErrorBoundary>
+    <ErrorBoundary>
+      <body
+        className="flex flex-col bg-background text-foreground transition-colors duration-200"
+        style={{ minHeight: "var(--vh)", height: "var(--vh)" }}
+      >
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <TetrisProvider>
             <Navbar />
             <main className="mx-auto mb-0 mt-16 flex w-full max-w-7xl flex-1 flex-col items-center justify-center px-6 lg:px-12">
               {children}
             </main>
-          </ErrorBoundary>
-        </TetrisProvider>
-      </ThemeProvider>
-    </body>
+          </TetrisProvider>
+        </ThemeProvider>
+      </body>
+    </ErrorBoundary>
   </html>
 );
 
