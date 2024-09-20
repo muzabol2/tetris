@@ -1,3 +1,5 @@
+"use client";
+
 import { Navbar } from "@/components";
 import "@/styles/globals.css";
 import { TetrisProvider } from "@/tetrisContext";
