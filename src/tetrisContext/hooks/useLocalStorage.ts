@@ -1,42 +1,42 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const useLocalStorage = <T>(initialValue: T, key: string, version: string) => {
-  const [storedValue, setStoredValue] = useState<T>(() => {
-    if (typeof window === "undefined" || !window.localStorage) {
-      console.warn("localStorage is not available");
+  const [storedValue, setStoredValue] = useState<T>(initialValue);
+  const [isLoaded, setIsLoaded] = useState(false);
 
-      return initialValue;
-    }
-    try {
+  useEffect(() => {
+    if (typeof window !== "undefined") {
       const item = window.localStorage.getItem(key);
 
       if (item) {
-        const parsedItem = JSON.parse(item);
+        try {
+          const parsedItem = JSON.parse(item);
 
-        return parsedItem.version === version ? parsedItem : initialValue;
+          if (parsedItem.version === version) {
+            setStoredValue(parsedItem);
+          }
+        } catch (error) {
+          console.error("Error parsing localStorage item:", error);
+        }
       }
-
-      return initialValue;
-    } catch (error) {
-      console.error("Error accessing localStorage:", error);
-
-      return initialValue;
+      setIsLoaded(true);
     }
-  });
+  }, [key, version]);
+
+  useEffect(() => {
+    if (isLoaded && typeof window !== "undefined") {
+      try {
+        window.localStorage.setItem(key, JSON.stringify({ ...storedValue, version }));
+      } catch (error) {
+        console.error("Error setting localStorage:", error);
+      }
+    }
+  }, [storedValue, isLoaded, key, version]);
 
   const setValue = (value: T | ((val: T) => T)) => {
-    try {
-      const valueToStore = value instanceof Function ? value(storedValue) : value;
-
-      setStoredValue(valueToStore);
-      if (typeof window !== "undefined" && window.localStorage) {
-        window.localStorage.setItem(key, JSON.stringify(valueToStore));
-      }
-    } catch (error) {
-      console.error("Error setting localStorage:", error);
-    }
+    setStoredValue((prevValue) => (value instanceof Function ? value(prevValue) : value));
   };
 
   return [storedValue, setValue] as const;
