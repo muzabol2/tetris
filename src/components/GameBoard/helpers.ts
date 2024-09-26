@@ -1,7 +1,7 @@
 "use client";
 
 import { BLOCK_SIZE, COLS, ROWS } from "@/constants";
-import { TetrisAction as A } from "@/enums";
+import { TetrisAction } from "@/enums";
 import { useTetrisContext } from "@/hooks";
 import { useEffect, useState } from "react";
 
@@ -13,7 +13,7 @@ const useHelpers = () => {
   } = useTetrisContext();
 
   const rotatePiece = () => {
-    dispatch({ type: A.ROTATE_PIECE });
+    dispatch({ type: TetrisAction.ROTATE_PIECE });
   };
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 "use client";
 
-import { TetrisAction as A } from "@/enums";
+import { TetrisAction } from "@/enums";
 import { useTetrisContext } from "@/hooks";
 import { useEffect, useState } from "react";
 
@@ -21,19 +21,19 @@ const useHelpers = () => {
   }, []);
 
   const movePieceDown = () => {
-    dispatch({ type: A.MOVE_PIECE_DOWN });
+    dispatch({ type: TetrisAction.MOVE_PIECE_DOWN });
   };
 
   const hardDrop = () => {
-    dispatch({ type: A.HARD_DROP });
+    dispatch({ type: TetrisAction.HARD_DROP });
   };
 
   const rotatePiece = () => {
-    dispatch({ type: A.ROTATE_PIECE });
+    dispatch({ type: TetrisAction.ROTATE_PIECE });
   };
 
   const movePiece = (direction: number) => {
-    dispatch({ type: A.MOVE_PIECE, payload: { dx: direction, dy: 0 } });
+    dispatch({ type: TetrisAction.MOVE_PIECE, payload: { dx: direction, dy: 0 } });
   };
 
   return { isMobile, movePieceDown, hardDrop, rotatePiece, movePiece };

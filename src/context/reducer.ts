@@ -1,7 +1,7 @@
 "use client";
 
 import type { Actions } from "./actions";
-import { TetrisAction as A, GameStatus as S } from "@/enums";
+import { GameStatus, TetrisAction } from "@/enums";
 import type { GameState } from "@/types";
 import {
   createNewGameState,
@@ -16,16 +16,16 @@ import {
 
 const reducer = (state: GameState, action: Actions): GameState => {
   switch (action.type) {
-    case A.NEW_GAME:
+    case TetrisAction.NEW_GAME:
       return createNewGameState(state.colors, state.highScore);
 
-    case A.TOGGLE_PAUSE_RESUME:
+    case TetrisAction.TOGGLE_PAUSE_RESUME:
       return {
         ...state,
-        gameStatus: state.gameStatus === S.PAUSED ? S.RUNNING : S.PAUSED,
+        gameStatus: state.gameStatus === GameStatus.PAUSED ? GameStatus.RUNNING : GameStatus.PAUSED,
       };
 
-    case A.MOVE_PIECE: {
+    case TetrisAction.MOVE_PIECE: {
       const { dx, dy } = action.payload;
       const newPiece = movePiece(state.currentPiece!, dx, dy);
 
@@ -36,25 +36,25 @@ const reducer = (state: GameState, action: Actions): GameState => {
       return { ...state, currentPiece: newPiece };
     }
 
-    case A.MOVE_PIECE_DOWN: {
+    case TetrisAction.MOVE_PIECE_DOWN: {
       const newPiece = movePiece(state.currentPiece!, 0, 1);
 
-      return reducer(state, { type: A.HANDLE_PIECE_MOVEMENT, payload: { newPiece } });
+      return reducer(state, { type: TetrisAction.HANDLE_PIECE_MOVEMENT, payload: { newPiece } });
     }
 
-    case A.HARD_DROP: {
+    case TetrisAction.HARD_DROP: {
       const droppedPiece = hardDropPiece(state.currentPiece!, state.grid);
 
-      return reducer(state, { type: A.HANDLE_PIECE_MOVEMENT, payload: { newPiece: droppedPiece } });
+      return reducer(state, { type: TetrisAction.HANDLE_PIECE_MOVEMENT, payload: { newPiece: droppedPiece } });
     }
 
-    case A.ROTATE_PIECE: {
+    case TetrisAction.ROTATE_PIECE: {
       const rotatedPiece = rotatePiece(state.currentPiece!);
 
-      return reducer(state, { type: A.HANDLE_PIECE_MOVEMENT, payload: { newPiece: rotatedPiece } });
+      return reducer(state, { type: TetrisAction.HANDLE_PIECE_MOVEMENT, payload: { newPiece: rotatedPiece } });
     }
 
-    case A.HANDLE_PIECE_MOVEMENT: {
+    case TetrisAction.HANDLE_PIECE_MOVEMENT: {
       const { newPiece } = action.payload;
 
       if (!isCollision(newPiece, state.grid)) {
@@ -78,13 +78,13 @@ const reducer = (state: GameState, action: Actions): GameState => {
         }),
 
         ...(isGameOver && {
-          gameStatus: S.GAME_OVER,
+          gameStatus: GameStatus.GAME_OVER,
           highScore: Math.max(state.highScore, newScore),
         }),
       };
     }
 
-    case A.SET_COLORS:
+    case TetrisAction.SET_COLORS:
       return {
         ...state,
         colors: action.payload.colors,
