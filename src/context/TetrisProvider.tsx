@@ -1,7 +1,7 @@
 "use client";
 
 import { TetrisContext } from "./TetrisContext";
-import { useTetrisActions } from "./actions/useTetrisActions";
+import { useTetrisActions } from "./actions";
 import { LoadingSpinner } from "@/components";
 import React from "react";
 
