@@ -2,14 +2,14 @@
 
 import type { Actions } from "./actions";
 import type { GameState } from "@/types";
-import type React from "react";
+import type { Dispatch } from "react";
 import { createContext } from "react";
 
-type ContextType = {
+type TetrisContextType = {
   state: GameState;
-  dispatch: React.Dispatch<Actions>;
+  dispatch: Dispatch<Actions>;
 };
 
-const Context = createContext<ContextType | undefined>(undefined);
+const TetrisContext = createContext<TetrisContextType | undefined>(undefined);
 
-export { Context };
+export { TetrisContext };

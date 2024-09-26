@@ -2,7 +2,6 @@
 
 import type { Actions } from "../actions";
 import { reducer } from "../reducer";
-import { useLocalStorage } from "./useLocalStorage";
 import { GAME_STATE_KEY, GAME_VERSION } from "@/constants";
 import { TetrisAction as A, GameStatus as S } from "@/enums";
 import type { GameState } from "@/types";
@@ -10,21 +9,49 @@ import { calculateSpeed, initialState } from "@/utils";
 import { useCallback, useEffect, useReducer, useState } from "react";
 
 const useGameState = () => {
-  const [localState, setLocalState] = useLocalStorage<GameState>(initialState, GAME_STATE_KEY, GAME_VERSION);
+  const [localState, setLocalState] = useState<GameState>(() => {
+    if (typeof window === "undefined") {
+      return initialState;
+    }
+
+    const storedState = localStorage.getItem(GAME_STATE_KEY);
+
+    if (storedState) {
+      try {
+        const parsedState = JSON.parse(storedState);
+
+        if (parsedState.version === GAME_VERSION) {
+          return parsedState.data;
+        }
+      } catch (error) {
+        console.error("Error parsing localStorage item:", error);
+      }
+    }
+
+    return initialState;
+  });
   const [state, dispatch] = useReducer(reducer, localState ?? initialState);
-  const [isMounted, setIsMounted] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  const enhancedDispatch = useCallback((action: Actions) => {
-    dispatch(action);
+    setIsLoaded(true);
   }, []);
 
   useEffect(() => {
-    setLocalState(state);
-  }, [state?.nextPiece, state?.colors]);
+    if (isLoaded) {
+      localStorage.setItem(GAME_STATE_KEY, JSON.stringify({ version: GAME_VERSION, data: localState }));
+    }
+  }, [localState.nextPiece, localState.colors, isLoaded]);
+
+  const enhancedDispatch = useCallback(
+    (action: Actions) => {
+      dispatch(action);
+      if (action.type !== A.SET_COLORS) {
+        setLocalState(state);
+      }
+    },
+    [state?.currentPiece, state?.colors]
+  );
 
   useEffect(() => {
     if (state?.gameStatus === S.RUNNING && state?.currentPiece) {
@@ -68,7 +95,7 @@ const useGameState = () => {
     return () => window.removeEventListener("keydown", handleKeyPress);
   }, [handleKeyPress]);
 
-  return { state, dispatch: enhancedDispatch, isMounted };
+  return { state, dispatch: enhancedDispatch, isLoaded };
 };
 
 export { useGameState };

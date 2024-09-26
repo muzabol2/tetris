@@ -1,15 +1,17 @@
 "use client";
 
-import { Context } from "./Context";
+import { TetrisContext } from "./Context";
 import { useGameState } from "./hooks/useGameState";
 import React from "react";
 
 const TetrisProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { state, dispatch, isMounted } = useGameState();
+  const { state, dispatch, isLoaded } = useGameState();
 
-  if (!isMounted) return null;
+  if (!isLoaded) {
+    return <div>Loading...</div>; // TODO: Add a loading spinner
+  }
 
-  return <Context.Provider value={{ state, dispatch }}>{children}</Context.Provider>;
+  return <TetrisContext.Provider value={{ state, dispatch }}>{children}</TetrisContext.Provider>;
 };
 
 export { TetrisProvider };

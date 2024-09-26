@@ -1,7 +1,7 @@
 "use client";
 
-import type { Piece } from "../types/gamePiece";
 import type { TetrisAction as A } from "@/enums";
+import type { Piece } from "@/types";
 
 type Actions =
   | { type: A.NEW_GAME }
