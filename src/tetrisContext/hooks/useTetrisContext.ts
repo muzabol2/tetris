@@ -3,7 +3,7 @@
 import { TetrisContext } from "../Context";
 import { useContext } from "react";
 
-export const useTetris = () => {
+const useTetrisContext = () => {
   const context = useContext(TetrisContext);
 
   if (context === undefined) {
@@ -12,3 +12,5 @@ export const useTetris = () => {
 
   return context;
 };
+
+export { useTetrisContext };

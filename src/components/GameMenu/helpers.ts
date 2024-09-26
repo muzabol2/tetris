@@ -1,10 +1,10 @@
 "use client";
 
 import { TetrisAction as A } from "@/enums";
-import { useTetris } from "@/tetrisContext";
+import { useTetrisContext } from "@/tetrisContext";
 
 const useHelpers = () => {
-  const { state, dispatch } = useTetris();
+  const { state, dispatch } = useTetrisContext();
 
   const newGame = () => {
     dispatch({ type: A.NEW_GAME });

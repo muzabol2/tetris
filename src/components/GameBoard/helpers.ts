@@ -2,7 +2,7 @@
 
 import { BLOCK_SIZE, COLS, ROWS } from "@/constants";
 import { TetrisAction as A } from "@/enums";
-import { useTetris } from "@/tetrisContext";
+import { useTetrisContext } from "@/tetrisContext";
 import { useEffect, useState } from "react";
 
 const useHelpers = () => {
@@ -10,7 +10,7 @@ const useHelpers = () => {
   const {
     state: { grid, currentPiece, gameStatus },
     dispatch,
-  } = useTetris();
+  } = useTetrisContext();
 
   const rotatePiece = () => {
     dispatch({ type: A.ROTATE_PIECE });

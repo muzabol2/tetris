@@ -45,7 +45,7 @@
   },
   "overrides": [
     {
-      "files": ["./postcss.config.mjs", "./next.config.mjs", "./src/app/layout.tsx", "./src/app/page.tsx"],
+      "files": ["./postcss.config.mjs", "./next.config.mjs", "src/app/**/*.tsx"],
       "rules": {
         "import/no-default-export": "off",
         "import/exports-last": "off"

@@ -10,6 +10,13 @@ type TetrisContextType = {
   dispatch: Dispatch<Actions>;
 };
 
+/**
+ * Context for managing Tetris game state.
+ *
+ * @type {TetrisContextType}
+ * @property {GameState} state - The current state of the Tetris game.
+ * @property {Dispatch<Actions>} dispatch - Function to dispatch actions to update the game state.
+ */
 const TetrisContext = createContext<TetrisContextType | undefined>(undefined);
 
 export { TetrisContext };

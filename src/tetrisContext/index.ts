@@ -1,2 +1,2 @@
 export * from "./Provider";
-export * from "./hooks/useTetris";
+export * from "./hooks/useTetrisContext";
