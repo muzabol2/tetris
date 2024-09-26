@@ -1,6 +1,6 @@
 "use client";
 
-import type { Actions } from "./actions";
+import type { Actions } from "./actions/actions";
 import type { GameState } from "@/types";
 import type { Dispatch } from "react";
 import { createContext } from "react";

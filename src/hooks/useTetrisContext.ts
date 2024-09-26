@@ -1,6 +1,6 @@
 "use client";
 
-import { TetrisContext } from "../Context";
+import { TetrisContext } from "../context/TetrisContext";
 import { useContext } from "react";
 
 const useTetrisContext = () => {

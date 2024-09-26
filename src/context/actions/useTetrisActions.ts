@@ -1,14 +1,14 @@
 "use client";
 
-import type { Actions } from "../actions";
 import { reducer } from "../reducer";
+import type { Actions } from "./actions";
 import { GAME_STATE_KEY, GAME_VERSION } from "@/constants";
 import { TetrisAction as A, GameStatus as S } from "@/enums";
 import type { GameState } from "@/types";
 import { calculateSpeed, initialState } from "@/utils";
 import { useCallback, useEffect, useReducer, useState } from "react";
 
-const useGameState = () => {
+const useTetrisActions = () => {
   const [localState, setLocalState] = useState<GameState>(() => {
     if (typeof window === "undefined") {
       return initialState;
@@ -98,4 +98,4 @@ const useGameState = () => {
   return { state, dispatch: enhancedDispatch, isLoaded };
 };
 
-export { useGameState };
+export { useTetrisActions };

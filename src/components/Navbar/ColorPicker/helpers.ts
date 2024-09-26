@@ -2,7 +2,7 @@
 
 import { SHAPES } from "@/constants";
 import { TetrisAction as A } from "@/enums";
-import { useTetrisContext } from "@/tetrisContext";
+import { useTetrisContext } from "@/hooks";
 import { getDefaultColors } from "@/utils";
 import { useEffect, useState } from "react";
 
