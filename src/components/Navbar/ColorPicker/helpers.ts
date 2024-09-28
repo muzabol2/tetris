@@ -1,15 +1,14 @@
 "use client";
 
-import { SHAPES } from "@/constants";
-import { TetrisAction as A } from "@/enums";
-import { useTetris } from "@/tetrisContext";
+import { TetrisAction } from "@/enums";
+import { useTetrisContext } from "@/hooks";
 import { getDefaultColors } from "@/utils";
 import { useEffect, useState } from "react";
 
 type ShapeKey = "I" | "J" | "L" | "O" | "S" | "T" | "Z";
 
 const useHelpers = () => {
-  const { state, dispatch } = useTetris();
+  const { state, dispatch } = useTetrisContext();
   const [selectedShape, setSelectedShape] = useState<ShapeKey | null>(null);
   const [tempColors, setTempColors] = useState<Record<ShapeKey, string>>(getDefaultColors);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
@@ -37,19 +36,12 @@ const useHelpers = () => {
   };
 
   const applyColors = () => {
-    dispatch({ type: A.SET_COLORS, payload: { colors: tempColors } });
+    dispatch({ type: TetrisAction.SET_COLORS, payload: { colors: tempColors } });
     showMessage("Colors applied");
   };
 
   const resetToDefault = () => {
-    const defaultColors = Object.keys(SHAPES).reduce(
-      (acc, key) => {
-        acc[key as ShapeKey] = SHAPES[key as ShapeKey].color;
-
-        return acc;
-      },
-      {} as Record<ShapeKey, string>
-    );
+    const defaultColors = getDefaultColors();
 
     setTempColors(defaultColors);
     showMessage("Colors reset to default.");
