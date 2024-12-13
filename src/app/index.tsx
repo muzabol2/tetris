@@ -1,6 +1,6 @@
+import "./index.css";
 import { ErrorBoundary, GameBoard, GameMenu, MobileButtons, Navbar } from "@/components";
 import { TetrisProvider } from "@/context";
-import "@/styles/globals.css";
 import { ThemeProvider } from "next-themes";
 
 const App = () => (

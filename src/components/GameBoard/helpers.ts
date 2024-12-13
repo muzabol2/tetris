@@ -1,6 +1,6 @@
 import { BLOCK_SIZE, COLS, ROWS } from "@/constants";
 import { TetrisAction } from "@/enums";
-import { useTetrisContext } from "@/hooks";
+import { useTetrisContext } from "@/context";
 import { useEffect, useState } from "react";
 
 const useHelpers = () => {
