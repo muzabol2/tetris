@@ -1,5 +1,5 @@
-import { TetrisAction } from "@/enums";
 import { useTetrisContext } from "@/context";
+import { TetrisAction } from "@/enums";
 import { getDefaultColors } from "@/utils";
 import { useEffect, useState } from "react";
 

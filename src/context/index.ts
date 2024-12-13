@@ -1,2 +1,2 @@
 export * from "./TetrisProvider";
-export * from "./useTetrisContext"
+export * from "./useTetrisContext";
