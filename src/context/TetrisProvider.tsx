@@ -1,5 +1,3 @@
-"use client";
-
 import { TetrisContext } from "./TetrisContext";
 import { useTetrisActions } from "./actions";
 import { LoadingSpinner } from "@/components";

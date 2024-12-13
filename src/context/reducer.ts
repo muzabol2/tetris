@@ -1,5 +1,3 @@
-"use client";
-
 import type { Actions } from "./actions";
 import { GameStatus, TetrisAction } from "@/enums";
 import type { GameState } from "@/types";

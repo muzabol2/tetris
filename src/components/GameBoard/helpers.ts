@@ -1,5 +1,3 @@
-"use client";
-
 import { BLOCK_SIZE, COLS, ROWS } from "@/constants";
 import { TetrisAction } from "@/enums";
 import { useTetrisContext } from "@/hooks";

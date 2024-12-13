@@ -1,5 +1,3 @@
-"use client";
-
 import { TetrisAction } from "@/enums";
 import { useTetrisContext } from "@/hooks";
 import { getDefaultColors } from "@/utils";

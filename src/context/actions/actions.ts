@@ -1,5 +1,3 @@
-"use client";
-
 import type { TetrisAction } from "@/enums";
 import type { Piece } from "@/types";
 

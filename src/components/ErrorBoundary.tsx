@@ -1,5 +1,3 @@
-"use client";
-
 import { GAME_VERSION } from "@/constants";
 import React from "react";
 import { ErrorBoundary as ReactErrorBoundary } from "react-error-boundary";

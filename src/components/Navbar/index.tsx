@@ -1,5 +1,3 @@
-"use client";
-
 import { Popover, PopoverContent, PopoverTrigger } from "../common";
 import { ColorPicker } from "./ColorPicker";
 import { ThemeSwitcher } from "./ThemeSwitcher";

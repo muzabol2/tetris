@@ -1,5 +1,3 @@
-"use client";
-
 import { useHelpers } from "./helpers";
 import { PieceGrid } from "@/components/common";
 import { SHAPES } from "@/constants";
