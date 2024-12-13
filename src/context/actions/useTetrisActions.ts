@@ -1,5 +1,3 @@
-"use client";
-
 import { reducer } from "../reducer";
 import type { Actions } from "./actions";
 import { GAME_STATE_KEY, GAME_VERSION } from "@/constants";

@@ -1,5 +1,3 @@
-"use client";
-
 import { useHelpers } from "./helpers";
 
 const MobileButtons = () => {

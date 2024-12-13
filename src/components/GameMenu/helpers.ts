@@ -1,7 +1,5 @@
-"use client";
-
+import { useTetrisContext } from "@/context";
 import { TetrisAction } from "@/enums";
-import { useTetrisContext } from "@/hooks";
 
 const useHelpers = () => {
   const { state, dispatch } = useTetrisContext();

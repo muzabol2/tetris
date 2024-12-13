@@ -1,5 +1,3 @@
-"use client";
-
 import { PauseResumeButton } from "./PauseResumeButton";
 import { Section } from "./Section";
 import { useHelpers } from "./helpers";

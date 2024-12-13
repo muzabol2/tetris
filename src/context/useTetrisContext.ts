@@ -1,5 +1,3 @@
-"use client";
-
 import { TetrisContext } from "@/context/TetrisContext";
 import { useContext } from "react";
 

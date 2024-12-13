@@ -1,5 +1,3 @@
-"use client";
-
 import { Block } from "./Block";
 import type { Piece } from "@/types";
 
